@@ -1,0 +1,63 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>{% if view.object.pk %}Modifier{% else %}Ajouter{% endif %} un événement - DonVia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body style="background-color: #f8f9fa;">
+
+    <div class="container d-flex align-items-center justify-content-center" style="min-height:100vh;">
+        <div class="text-center w-100">
+            <div class="bg-white p-4 rounded shadow mx-auto" style="max-width:720px; text-align:left;">
+                
+                <h1 id="page-title" class="mb-4 text-center">
+                    {% if view.object.pk %}
+                        Formulaire de modification de l'événement "{{ view.object.titre }}"
+                    {% else %}
+                        Formulaire d'ajout d'un événement
+                    {% endif %}
+                </h1>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    {% for field in form %}
+                        <div class="mb-3">
+                            {{ field.label_tag }}
+                            {{ field|add_class:"form-control" }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button type="submit" class="btn btn-primary">
+                            {% if view.object.pk %}Enregistrer les modifications{% else %}Enregistrer{% endif %}
+                        </button>
+                        <a href="{% if view.object.pk %}{% url 'details_evenement' view.object.pk %}{% else %}{% url 'liste_evenements' %}{% endif %}" 
+                           class="btn btn-secondary">Retour</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

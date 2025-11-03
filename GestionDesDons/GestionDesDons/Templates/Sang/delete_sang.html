@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Supprimer une poche de sang - DonVia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body style="background-color: #f8f9fa;">
+
+    <div class="container d-flex align-items-center justify-content-center" style="min-height:80vh;">
+        <div class="text-center w-100">
+            <div class="bg-white p-4 rounded shadow mx-auto" style="max-width:720px;">
+
+                <h2 class="mb-4 text-danger">Confirmer la suppression</h2>
+                <hr>
+
+                <p>Êtes-vous sûr de vouloir supprimer la poche de sang suivante ?</p>
+
+                <div class="text-start mb-3">
+                    <p><strong>Groupe sanguin :</strong> {{ sang.groupe_sanguin }}{{ sang.rhesus }}</p>
+                    <p><strong>Type de don :</strong> {{ sang.type_don }}</p>
+                    <p><strong>Quantité (litres) :</strong> {{ sang.quantite }}</p>
+                    <p><strong>Statut :</strong> {{ sang.status }}</p>
+                    <p><strong>Date de collecte :</strong> {{ sang.date_collecte|date:"d/m/Y" }}</p>
+                    <p><strong>Date d'expiration :</strong> {{ sang.date_expiration|date:"d/m/Y" }}</p>
+                    <p><strong>Lieu de stockage :</strong> {{ sang.lieu_stockage }}</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+                        <a href="{% url 'liste_sangs' %}" class="btn btn-secondary">Annuler</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

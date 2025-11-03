@@ -1,0 +1,120 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Ajouter / Modifier un événement - DonVia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body style="background-color: #f8f9fa;">
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height:100vh;">
+    <div class="text-center w-100">
+        <div class="bg-white p-4 rounded shadow mx-auto" style="max-width:720px; text-align:left;">
+            
+            <h1 id="page-title" class="mb-4 text-center">
+                {% if form.instance.pk %}
+                    Modifier un événement
+                {% else %}
+                    Ajouter un événement
+                {% endif %}
+            </h1>
+
+            <form method="post" novalidate enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Titre -->
+                <div class="mb-3">
+                    <label for="id_titre" class="form-label">Titre</label>
+                    {{ form.titre|add_class:"form-control"|add_error_class:"is-invalid" }}
+                    {% for error in form.titre.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label for="id_description" class="form-label">Description</label>
+                    {{ form.description|add_class:"form-control"|add_error_class:"is-invalid" }}
+                    {% for error in form.description.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Dates -->
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="id_date_debut" class="form-label">Date début</label>
+                        {{ form.date_debut|add_class:"form-control"|add_error_class:"is-invalid"|attr:"type=date" }}
+                        {% for error in form.date_debut.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="id_date_fin" class="form-label">Date fin</label>
+                        {{ form.date_fin|add_class:"form-control"|add_error_class:"is-invalid"|attr:"type=date" }}
+                        {% for error in form.date_fin.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Nombre de participants -->
+                <div class="mb-3">
+                    <label for="id_nb_participants" class="form-label">Nombre de participants</label>
+                    {{ form.nb_participants|add_class:"form-control"|add_error_class:"is-invalid"|attr:"type=number|min=1" }}
+                    {% for error in form.nb_participants.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Statut -->
+                <div class="mb-3">
+                    <label for="id_statut" class="form-label">Statut</label>
+                    {{ form.statut|add_class:"form-select"|add_error_class:"is-invalid" }}
+                    {% for error in form.statut.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Lieu -->
+                <div class="mb-3">
+                    <label for="id_lieu_evenement" class="form-label">Lieu de l'événement</label>
+                    {{ form.lieu_evenement|add_class:"form-control"|add_error_class:"is-invalid" }}
+                    {% for error in form.lieu_evenement.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Image -->
+                <div class="mb-3">
+                    <label for="id_image" class="form-label">Image</label>
+                    {{ form.image|add_class:"form-control"|add_error_class:"is-invalid" }}
+                    {% if evenement.image %}
+                    <img class="img-fluid" src="{{ evenement.image.url }}" alt="{{ evenement.titre }}">
+                    {% endif %}
+                </div>
+
+                <!-- Boutons -->
+                <div class="d-flex gap-2 justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <a href="{% url 'liste_evenements' %}" class="btn btn-secondary">Annuler</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
