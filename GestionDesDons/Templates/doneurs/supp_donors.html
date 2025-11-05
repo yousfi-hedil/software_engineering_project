@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supprimer un don - DonVia</title>
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background: #f7f7f9; }
+    .card { max-width: 720px; margin: 40px auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Confirmer la suppression</h3>
+        <p class="text-muted">Vous êtes sur le point de supprimer définitivement ce don. Cette action est irréversible.</p>
+
+        {% if donation %}
+        <div class="my-3">
+          <div class="fw-bold">{{ donation.nom }} {{ donation.prenom }}</div>
+          <div class="small text-muted">Groupe: {{ donation.blood_group|default:"—" }} · Email: {{ donation.mail|default:"—" }}</div>
+        </div>
+
+        <form method="post" action="{% url 'delete_donor' donation.pk %}" class="d-inline">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger"><i class="fas fa-trash me-2"></i>Supprimer</button>
+        </form>
+        <a href="{% url 'donors' %}" class="btn btn-outline-secondary ms-2"><i class="fas fa-arrow-left me-2"></i>Annuler</a>
+        {% else %}
+        <div class="alert alert-warning">Don introuvable.</div>
+        <a href="{% url 'donors' %}" class="btn btn-outline-secondary">Retour</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

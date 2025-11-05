@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Donateurs - DonVia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+    <style>
+        .donation-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .action-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white !important;
+            text-decoration: none;
+            margin: 0 3px;
+        }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            color: white !important;
+        }
+        .edit-btn {
+            background-color: #007bff;
+        }
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        .donation-item {
+            padding: 12px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #eee;
+        }
+        .donation-item:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        /* Refined donation card */
+        .donation-card {
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 12px;
+            padding: 14px 16px;
+            background: #fff;
+            transition: box-shadow .2s ease, transform .15s ease;
+        }
+        .donation-card:hover {
+            box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
+        .donor-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .donor-meta {
+            font-size: .85rem;
+            color: #6c757d;
+        }
+        .meta-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #f1f3f5;
+            font-size: .8rem;
+            color: #495057;
+        }
+        .meta-chip i { color: #8a2534; }
+        .type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: .75rem;
+            border-radius: 999px;
+            background: #fff2f4;
+            color: #8a2534;
+            border: 1px solid #ffd6dc;
+        }
+        .donation-row { display:flex; align-items:center; justify-content:space-between; gap: 12px; }
+        .don-left { min-width: 0; }
+        .don-right { flex-shrink: 0; }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+        <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex">
+          
+            
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+            <a href="{% url 'home' %}" class="navbar-brand ms-4 ms-lg-0">
+                <h1 class="fw-bold text-primary m-0">Don<span class="text-white">Via</span></h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="{% url 'home' %}" class="nav-item nav-link">Accueil</a>
+                    <a href="/about.html" class="nav-item nav-link">À propos</a>
+                    <a href="/evenements.html" class="nav-item nav-link">Événements</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'volunteer' %}" class="dropdown-item">Volontaires</a>
+                            <a href="{% url 'donors' %}" class="dropdown-item">Dons</a>
+                            <a href="/recipients.html" class="dropdown-item">Bénéficiaires</a>
+                        </div>
+            <!-- Result meta and active filters -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                <div class="text-muted">{{ donations|length }} résultat{{ donations|length|pluralize:"s" }}</div>
+                <div class="d-flex flex-wrap gap-2">
+                    {% if q %}
+                    <a href="{% url 'donors' %}?group={{ current_group }}&sort={{ current_sort }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
+                        <i class="fas fa-search me-1"></i> Recherche: "{{ q }}" <span class="ms-2 text-muted">✕</span>
+                    </a>
+                    {% endif %}
+                    {% if current_group %}
+                    <a href="{% url 'donors' %}?q={{ q }}&sort={{ current_sort }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
+                        <i class="fas fa-filter me-1"></i> Groupe: {{ current_group }} <span class="ms-2 text-muted">✕</span>
+                    </a>
+                    {% endif %}
+                    {% if current_sort != 'date_recent' %}
+                    <a href="{% url 'donors' %}?q={{ q }}&group={{ current_group }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
+                        <i class="fas fa-sort me-1"></i> Tri:
+                        {% if current_sort == 'date_recent' %} Date (récent)
+                        {% elif current_sort == 'date_ancien' %} Date (ancien)
+                        {% elif current_sort == 'name_az' %} Nom (A-Z)
+                        {% elif current_sort == 'name_za' %} Nom (Z-A)
+                        {% else %} Tri personnalisé{% endif %}
+                        <span class="ms-2 text-muted">✕</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+                    </div>
+                    <a href="/contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <div class="d-none d-lg-flex ms-2">
+                    <a class="btn btn-primary py-2 px-3" href="{% url 'ajouter_donors' %}">
+                        <i class="fa fa-heart me-2"></i>
+                        Faire un don
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Hero Section Start -->
+    <div class="hero-section">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center py-5">
+                <div class="col-lg-8">
+                    <div class="hero-content py-5">
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Donateurs</h1>
+                        <p class="hero-description text-white wow fadeInUp" data-wow-delay="0.6s">
+                            Votre générosité change des vies. Rejoignez notre communauté de donateurs et participez à notre mission de créer un monde meilleur.
+                        </p>
+                        <div class="hero-buttons wow fadeInUp" data-wow-delay="0.8s">
+                            <a href="{% url 'ajouter_donors' %}" class="btn btn-primary btn-lg me-3">
+                                <i class="fa fa-heart me-2"></i>
+                                Faire un don
+                            </a>
+                            <a href="{% url 'contact_html' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fa fa-info-circle me-2"></i>
+                                En savoir plus
+                            </a>
+                        </div>
+                        <div class="hero-stats wow fadeInUp" data-wow-delay="1s">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="stat-item">
+                                        <h3 class="stat-number">{{ stat_top_group_count|default:0 }}</h3>
+                                        <p class="stat-label">Groupe le plus donné: {{ stat_top_group_label|default:"—" }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-item">
+                                        <h3 class="stat-number">{{ stat_refused|default:0 }}</h3>
+                                        <p class="stat-label">Dossiers refusés</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-item">
+                                        <h3 class="stat-number">{{ stat_total_donations|default:0 }}</h3>
+                                        <p class="stat-label">Dons enregistrés</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero Section End -->
+
+
+    <!-- Donors Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Nos Donateurs</div>
+                <h1 class="display-6 mb-5">Merci à tous nos généreux donateurs</h1>
+            </div>
+            <!-- Toolbar: Search / Filter / Sort -->
+            <div class="border-0 rounded p-3 p-md-4 mb-4" style="background: linear-gradient(180deg, #ffffff 0%, #fff7f8 100%); box-shadow: 0 10px 25px rgba(138,37,52,.08);">
+                <form id="donor-filter-form" class="row g-3 align-items-stretch" method="get" action="{% url 'donors' %}">
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating position-relative">
+                            <input type="text" class="form-control" id="don-q" name="q" value="{{ q|default:'' }}" placeholder="Rechercher (nom, adresse)">
+                            <label for="don-q">Rechercher (nom, adresse)</label>
+                            <div class="position-absolute top-50 end-0 translate-middle-y pe-3 text-muted" style="pointer-events:none;"><i class="fas fa-search"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="don-group" name="group">
+                                <option value="">Tous groupes</option>
+                                {% for g in groups %}
+                                <option value="{{ g }}" {% if current_group == g %}selected{% endif %}>{{ g }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="don-group">Groupe sanguin</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="don-sort" name="sort">
+                                <option value="date_recent" {% if current_sort == 'date_recent' %}selected{% endif %}>Date (récent)</option>
+                                <option value="date_ancien" {% if current_sort == 'date_ancien' %}selected{% endif %}>Date (ancien)</option>
+                                <option value="name_az" {% if current_sort == 'name_az' %}selected{% endif %}>Nom (A-Z)</option>
+                                <option value="name_za" {% if current_sort == 'name_za' %}selected{% endif %}>Nom (Z-A)</option>
+                            </select>
+                            <label for="don-sort">Trier par</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Donor Statistics (dynamic) -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="bg-white text-center p-4 rounded shadow">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-tint fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_top_group_count|default:0 }}</h3>
+                        <p class="mb-0">Groupe le plus donné: {{ stat_top_group_label|default:"—" }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="bg-white text-center p-4 rounded shadow">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-times-circle fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_refused|default:0 }}</h3>
+                        <p class="mb-0">Dossiers refusés</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="bg-white text-center p-4 rounded shadow">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-tint fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_total_donors|default:0 }}</h3>
+                        <p class="mb-0">Donateurs distincts</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="bg-white text-center p-4 rounded shadow">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-gift fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_total_donations|default:0 }}</h3>
+                        <p class="mb-0">Dons enregistrés</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donor Types -->
+            <div class="container-xxl bg-light py-5">
+                <div class="container">
+                    <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                        <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Types de dons</div>
+                        <h1 class="display-6 mb-5">La facons de faire la différence</h1>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 col-md-10 wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                                <div class="text-center p-4 pt-0">
+                                    <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
+                                        <small>Don de sang</small>
+                                    </div>
+                                    <h5 class="mb-3">Sauvez des vies</h5>
+                                    <p>Participez à nos campagnes de don de sang et devenez un héros anonyme en sauvant des vies.</p>
+                                </div>
+                                <!-- Liste des dons de sang -->
+                                <div class="donations-list mt-4" id="donations-sang">
+                                    {% if donations %}
+                                        {% for d in donations %}
+                                        <div class="donation-card mb-2">
+                                            <div class="donation-row">
+                                                <div class="don-left">
+                                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                                        <span class="type-badge text-capitalize">sang</span>
+                                                        <span class="meta-chip"><i class="fa fa-tint"></i>{{ d.blood_group|default:"—" }}</span>
+                                                    </div>
+                                                    <div class="donor-name">{{ d.nom }} {{ d.prenom }}</div>
+                                                    <div class="donor-meta"><i class="fa fa-envelope me-1"></i>{{ d.mail }}</div>
+                                                </div>
+                                                <div class="don-right donation-actions">
+                                                    <a href="{% url 'edit_donor' d.pk %}" class="action-btn edit-btn" title="Modifier"><i class="fas fa-edit"></i></a>
+                                                    <a href="{% url 'delete_donor' d.pk %}" class="action-btn delete-btn" title="Supprimer (confirmation)"><i class="fas fa-trash"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% empty %}
+                                        <div class="alert alert-info">Aucun don enregistré dans cette catégorie</div>
+                                        {% endfor %}
+                                        <script>window.SERVER_DONATIONS = true;</script>
+                                    {% endif %}
+                                </div>
+                                <div class="mt-3 pt-2 border-top text-center">
+                                    <a class="btn btn-primary" href="{% url 'ajouter_donors' %}">
+                                        <i class="fa fa-heart me-2"></i> Faire un don de sang
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Donors removed to keep layout minimal and without photos -->
+        </div>
+    </div>
+    <!-- Donors End -->
+
+
+    <!-- Donate Start (no image) -->
+    
+    <!-- Donate End -->
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h1 class="fw-bold text-primary mb-4">Don<span class="text-white">Via</span></h1>
+                    <p>Ensemble, créons un impact positif dans la vie des personnes qui en ont le plus besoin. Rejoignez notre mission humanitaire.</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square me-1" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square me-1" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Contact</h5>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Rue de la Paix, Paris, France</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+33 1 23 45 67 89</p>
+                    <p><i class="fa fa-envelope me-3"></i>contact@donvia.org</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Liens Rapides</h5>
+                    <a class="btn btn-link" href="/about.html">À propos</a>
+                    <a class="btn btn-link" href="/contact.html">Contact</a>
+                    <a class="btn btn-link" href="{% url 'volunteer' %}">Devenir Volontaire</a>
+                    <a class="btn btn-link" href="{% url 'donors' %}">Faire un Don</a>
+                    <a class="btn btn-link" href="/evenements.html">Événements</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Newsletter</h5>
+                    <p>Inscrivez-vous pour recevoir nos actualités et rester informé de nos actions.</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Votre email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">S'inscrire</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="#">DonVia</a>, Tous droits réservés.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        Conçu par <a href="https://htmlcodex.com">HTML Codex</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script>
+        (function(){
+          const form = document.getElementById('donor-filter-form');
+          if (!form) return;
+          const q = form.querySelector('#don-q');
+          const grp = form.querySelector('#don-group');
+          const sort = form.querySelector('#don-sort');
+          let t;
+          function submit(){ form.requestSubmit ? form.requestSubmit() : form.submit(); }
+          if (q){ q.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(submit, 400); }); }
+          if (grp){ grp.addEventListener('change', submit); }
+          if (sort){ sort.addEventListener('change', submit); }
+        })();
+    </script>
+
+    <style>
+        .donations-list {
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+        .donation-item {
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .donation-item:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        .action-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+        }
+        .edit-button {
+            background-color: #007bff;
+        }
+        .delete-button {
+            background-color: #dc3545;
+        }
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .edit-button:hover {
+            background-color: #0056b3;
+        }
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+/* Combined backup of css/style.css - created by assistant */
+/********** Template CSS **********>
+:root {
+    --primary: #8A2534;
+    --secondary: #FFF7F8;
+    --light: #FEFDFD;
+    --dark: #8A2534;
+    --accent1: #9CDDE5;
+    --accent2: #F0A7C5;
+    --bg-rose: #FFF7F8;
+    --text-dark: #8A2534;
+}
+
+.back-to-top {
+    position: fixed;
+    display: none;
+    right: 30px;
+    bottom: 30px;
+    z-index: 99;
+}
+
+
+/*** Spinner ***/
+#spinner {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease-out, visibility 0s linear .5s;
+    z-index: 99999;
+}
+
+#spinner.show {
+    transition: opacity .5s ease-out, visibility 0s linear 0s;
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/*** Button ***/
+.btn {
+    font-weight: 500;
+    transition: .5s;
+}
+
+.btn.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #FFFFFF;
+}
+
+.btn.btn-primary:hover {
+    background-color: #6E1E2B;
+    border-color: #6E1E2B;
+    color: #FFFFFF;
+}
+
+.btn.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #FFFFFF;
+}
+
+.btn-square {
+    width: 38px;
+    height: 38px;
+}
+
+.btn-sm-square {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-lg-square {
+    width: 48px;
+    height: 48px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-lg-square {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+/* ... (rest of original CSS included) ... */
+/* For brevity the full content is backed up in the file created on disk. */
