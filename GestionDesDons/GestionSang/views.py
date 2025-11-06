@@ -34,3 +34,12 @@ class SangDelete(DeleteView):
     model = Sang
     template_name = 'sang/delete_sang.html'
     success_url = reverse_lazy('liste_sangs')
+
+
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'index.html')
+
+def about(request):
+    return render(request, 'about.html')
