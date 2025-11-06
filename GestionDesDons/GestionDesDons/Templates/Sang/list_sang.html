@@ -40,8 +40,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link">Accueil</a>
-                    <a href="about.html" class="nav-item nav-link">À propos</a>
+                    <a href="{% url 'home' %}" class="nav-item nav-link">Accueil</a>
+                    <a href="{% url 'about' %}" class="nav-item nav-link">À propos</a>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/evenements/' %}active{% endif %}" href="{% url 'liste_evenements' %}">Événements</a>
                     </li>

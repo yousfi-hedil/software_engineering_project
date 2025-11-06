@@ -7,6 +7,7 @@ from .views import (
     EvenementDelete,
 )
 
+
 urlpatterns = [
     path('', EvenementList.as_view(), name='liste_evenements'),  
     path('ajouter/', EvenementCreate.as_view(), name='ajouter_evenement'),

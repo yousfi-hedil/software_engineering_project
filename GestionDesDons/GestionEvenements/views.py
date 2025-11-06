@@ -40,4 +40,3 @@ class EvenementDelete(DeleteView):
     template_name = "Evenement/delete_event.html"
     success_url = reverse_lazy("liste_evenements")
 
-
