@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>DonVia - Site de Donation Professionnel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons & CSS Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Spinner Start -->
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<!-- Spinner End -->
+
+<!-- Navbar Start -->
+<div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5">
+        <a href="{% url 'home' %}" class="navbar-brand ms-4 ms-lg-0">
+            <h1 class="fw-bold text-primary m-0">Don<span class="text-white">Via</span></h1>
+        </a>
+        <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link active">Accueil</a>
+                <a href="{% url 'about_html' %}" class="nav-item nav-link">À propos</a>
+                <a href="{% url 'liste_evenements' %}" class="nav-item nav-link">Événements</a>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'liste_volunteers' %}" class="dropdown-item">Volontaires</a>
+                        <a href="{% url 'liste_sangs' %}" class="dropdown-item">Dons</a>
+                        <a href="#" class="dropdown-item">Bénéficiaires</a>
+                    </div>
+                </div>
+
+                <a href="{% url 'contact_html' %}" class="nav-item nav-link">Contact</a>
+            </div>
+            <div class="d-none d-lg-flex ms-2">
+                <a class="btn btn-primary py-2 px-3" href="{% url 'ajouter_donors' %}">
+                    <i class="fa fa-heart me-2"></i>Faire un don
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+<!-- Navbar End -->
+
+<!-- Hero Section Start -->
+<section class="hero-section">
+    <div class="hero-background"><div class="hero-overlay"></div></div>
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <p class="hero-description wow fadeInUp" data-wow-delay="0.3s">
+                        Rejoignez notre mission humanitaire pour offrir espoir, soins et soutien à ceux qui en ont le plus besoin.
+                    </p>
+                    <div class="hero-buttons wow fadeInUp" data-wow-delay="0.5s">
+                        <a href="{% url 'liste_donneurs' %}" class="btn btn-primary btn-lg me-3">
+                            <i class="fa fa-heart me-2"></i>Faire un don
+                        </a>
+                        <a href="{% url 'liste_volunteers' %}" class="btn btn-outline-primary btn-lg">
+                            <i class="fa fa-hands-helping me-2"></i>Volontaires
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image wow fadeInRight" data-wow-delay="0.3s">
+                    <img src="{% static 'img/DSC 1.jpg' %}" alt="Aide humanitaire aux enfants" class="img-fluid rounded main-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- About Start -->
+<section class="container-xxl py-5 bg-light">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <h2>Nous aidons les personnes dans le besoin à travers le monde</h2>
+                <p>DonVia est une organisation caritative dédiée à l'amélioration des conditions de vie des personnes vulnérables. Notre mission est de bâtir un monde plus équitable et empreint de compassion.</p>
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <img src="{% static 'img/Gemini.jpg' %}" alt="À propos de DonVia" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About End -->
+
+<!-- Footer Start -->
+<footer class="container-fluid bg-dark text-white-50 mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-3 col-md-6">
+                <h1 class="fw-bold text-primary mb-4">Don<span class="text-white">Via</span></h1>
+                <p>Ensemble, créons un impact positif dans la vie des personnes qui en ont le plus besoin.</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-light mb-4">Liens Rapides</h5>
+                <a class="btn btn-link" href="{% url 'home' %}">Accueil</a>
+                <a class="btn btn-link" href="{% url 'about_html' %}">À propos</a>
+                <a class="btn btn-link" href="{% url 'contact_html' %}">Contact</a>
+                <a class="btn btn-link" href="{% url 'liste_volunteers' %}">Volontaires</a>
+                <a class="btn btn-link" href="{% url 'liste_donneurs' %}">Faire un Don</a>
+                <a class="btn btn-link" href="{% url 'liste_evenements' %}">Événements</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer End -->
+
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+<!-- JS Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>À propos - DonVia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+        <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex"></div>
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+            <a href="{% url 'home' %}" class="navbar-brand ms-4 ms-lg-0">
+                <h1 class="fw-bold text-primary m-0">Don<span class="text-white">Via</span></h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="{% url 'home' %}" class="nav-item nav-link">Accueil</a>
+                    <a href="{% url 'about_html' %}" class="nav-item nav-link active">À propos</a>
+                    <a href="{% url 'liste_evenements' %}" class="nav-item nav-link">Événements</a>
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'liste_volunteers' %}" class="dropdown-item">Volontaires</a>
+                            <a href="{% url 'liste_donneurs' %}" class="dropdown-item">Bénéficiaires</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'contact_html' %}" class="nav-item nav-link">Contact</a>
+                </div>
+                <div class="d-none d-lg-flex ms-2">
+                    <a class="btn btn-primary py-2 px-3" href="{% url 'ajouter_donors' %}">
+                        <i class="fa fa-heart me-2"></i>Faire un don
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s" style="background: linear-gradient(rgba(138, 37, 52, 0.8), rgba(138, 37, 52, 0.8))">
+        <div class="container text-center">
+            <h1 class="display-4 text-white animated slideInDown mb-4">À Propos</h1>
+            <nav aria-label="breadcrumb animated slideInDown"></nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- About Section Start -->
+    <div class="container-xxl py-5 bg-light">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="about-content">
+                        <div class="section-tagline"><span class="tagline-text">À propos de nous</span></div>
+                        <h2 class="section-title">Nous aidons les personnes dans le besoin à travers le monde</h2>
+                        <div class="highlight-box">
+                            <p class="highlight-text">DonVia est une organisation caritative dédiée à l'amélioration des conditions de vie des personnes les plus vulnérables. Notre mission est de créer un monde plus équitable et compassionnel.</p>
+                            <span class="highlight-author">Marie Dubois, Fondatrice</span>
+                        </div>
+                        <p class="about-description">Depuis notre création en 2020, nous avons aidé plus de 10,000 familles à travers nos programmes de don de sang, d'aide alimentaire, de soutien éducatif et d'assistance médicale. Notre équipe de volontaires dévoués travaille sans relâche pour faire une différence positive dans la vie de ceux qui en ont le plus besoin.</p>
+                        <div class="about-features">
+                            <div class="feature-item"><div class="feature-icon"><i class="fa fa-heart"></i></div><div class="feature-content"><h5>Mission Humanitaire</h5><p>Aider les plus vulnérables</p></div></div>
+                            <div class="feature-item"><div class="feature-icon"><i class="fa fa-users"></i></div><div class="feature-content"><h5>Équipe Dévouée</h5><p>Volontaires passionnés</p></div></div>
+                            <div class="feature-item"><div class="feature-icon"><i class="fa fa-globe"></i></div><div class="feature-content"><h5>Impact Mondial</h5><p>Présents dans 50+ pays</p></div></div>
+                        </div>
+                        <div class="about-buttons">
+                            <a href="{% url 'ajouter_donors' %}" class="btn btn-primary me-3"><i class="fa fa-heart me-2"></i>Faire un don</a>
+                            <a href="{% url 'contact_html' %}" class="btn btn-outline-primary"><i class="fa fa-phone me-2"></i>Nous contacter</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="about-images">
+                        <div class="main-image-container">
+                            <img src="{% static 'img/about-1.jpg' %}" alt="À propos" class="main-about-image">
+                            <div class="image-overlay"><div class="play-button"><i class="fa fa-play"></i></div></div>
+                        </div>
+                        <div class="secondary-image"><img src="{% static 'img/about-2.jpg' %}" alt="Équipe" class="secondary-about-image"></div>
+                        <div class="experience-badge"><div class="badge-content"><h3>10+</h3><p>Années d'expérience</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Section End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h1 class="fw-bold text-primary mb-4">Don<span class="text-white">Via</span></h1>
+                    <p>Ensemble, créons un impact positif dans la vie des personnes qui en ont le plus besoin. Rejoignez notre mission humanitaire.</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square me-1" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square me-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square me-1" href="#"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square me-0" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Contact</h5>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>Tunis, Ariana Soghra</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+216 58964123</p>
+                    <p><i class="fa fa-envelope me-3"></i>donvia@gmail.com</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Liens Rapides</h5>
+                    <a class="btn btn-link" href="{% url 'about_html' %}">À propos</a>
+                    <a class="btn btn-link" href="{% url 'contact_html' %}">Contact</a>
+                    <a class="btn btn-link" href="{% url 'liste_volunteers' %}">Devenir Volontaire</a>
+                    <a class="btn btn-link" href="{% url 'ajouter_donors' %}">Faire un Don</a>
+                    <a class="btn btn-link" href="{% url 'liste_evenements' %}">Événements</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Newsletter</h5>
+                    <p>Inscrivez-vous pour recevoir nos actualités et rester informé de nos actions.</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Votre email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">S'inscrire</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">&copy; 2025 <a href="#">DonVia</a>, Tous droits réservés.</div>
+                    <div class="col-md-6 text-center text-md-end">Conçu par <a href="https://htmlcodex.com">HTML Codex</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JS Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

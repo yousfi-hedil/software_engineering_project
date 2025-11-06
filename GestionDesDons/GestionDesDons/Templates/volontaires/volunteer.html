@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Volontaires - DonVia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <style>
+        .volunteer-info {
+            margin-bottom: 15px;
+        }
+            /* Styles pour les actions de volontaires : design amélioré */
+            .volunteer-actions {
+                display: flex;
+                justify-content: center;
+                gap: 12px;
+                margin: 0 0 8px 0;
+                padding: 0;
+                position: relative;
+                z-index: 2;
+            }
+
+            /* Séparateur placé sous les boutons (au-dessus du nom) */
+            .volunteer-actions::before {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 22%;
+                right: 22%;
+                height: 1px;
+                background: linear-gradient(to right, transparent, rgba(0,0,0,0.08), transparent);
+            }
+
+            .action-btn {
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                cursor: pointer;
+                transition: transform 0.22s cubic-bezier(.2,.9,.3,1), box-shadow 0.22s;
+                text-decoration: none;
+                color: white !important;
+                box-shadow: 0 6px 18px rgba(11,15,27,0.08);
+                position: relative;
+                overflow: visible;
+                font-size: 0;
+            }
+
+            /* subtle glow behind the icon */
+            .action-btn::after {
+                content: '';
+                position: absolute;
+                inset: -6px;
+                border-radius: 14px;
+                background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.02), transparent 30%);
+                z-index: 0;
+                transition: opacity 0.2s;
+                opacity: 0;
+            }
+
+            .action-btn[data-label]::before {
+                content: attr(data-label);
+                position: absolute;
+                bottom: calc(100% + 8px);
+                left: 50%;
+                transform: translateX(-50%) translateY(6px);
+                background: rgba(0,0,0,0.75);
+                color: #fff;
+                padding: 6px 8px;
+                border-radius: 6px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.18s, transform 0.18s;
+                z-index: 10;
+            }
+
+            .action-btn:focus::before,
+            .action-btn:hover::before {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            .action-btn:focus {
+                outline: 3px solid rgba(13,110,253,0.12);
+                outline-offset: 3px;
+                box-shadow: 0 10px 30px rgba(13,110,253,0.06);
+            }
+
+            .action-btn:hover::after {
+                opacity: 1;
+            }
+
+            .btn-edit {
+                background: linear-gradient(180deg, #4ea1ff 0%, #0d6efd 100%);
+            }
+
+            .btn-delete {
+                background: linear-gradient(180deg, #ff7b88 0%, #dc3545 100%);
+            }
+
+            .action-btn:hover {
+                transform: translateY(-4px) scale(1.02);
+                box-shadow: 0 14px 26px rgba(6,16,40,0.12);
+            }
+
+            .action-btn i {
+                font-size: 1.05rem;
+                position: relative;
+                z-index: 2;
+                filter: drop-shadow(0 1px 0 rgba(0,0,0,0.06));
+                transition: transform 0.2s;
+            }
+
+            .action-btn:hover i {
+                transform: translateY(-1px) scale(1.07);
+            }
+
+            /* Responsive: on small screens use compact circle icons and hide labels */
+            @media (max-width: 576px) {
+                .action-btn {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                }
+                .action-btn[data-label]::before { display: none; }
+                .volunteer-actions::before { left: 10%; right: 10%; bottom: -8px; }
+            }
+        .team-text {
+            padding: 1.5rem !important;
+        }
+        .team-text h5 {
+            margin-bottom: 0.5rem;
+        }
+        .team-text p {
+            margin-bottom: 0.25rem;
+        }
+        /* Amélioration de la séparation */
+        .volunteer-actions::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 25%;
+            right: 25%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+        }
+        /* Position relative pour le conteneur */
+        .team-text {
+            position: relative;
+        }
+    </style>
+    
+    <style>
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .action-btn i {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+        .action-btn:hover::before {
+            transform: translateY(0);
+        }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .action-btn:hover i {
+            transform: scale(1.1);
+        }
+        .edit-btn {
+            color: #007bff;
+            border-color: #007bff;
+            background-color: transparent;
+        }
+        .edit-btn::before {
+            background-color: #007bff;
+        }
+        .edit-btn:hover {
+            color: white;
+        }
+        .delete-btn {
+            color: #dc3545;
+            border-color: #dc3545;
+            background-color: transparent;
+        }
+        .delete-btn::before {
+            background-color: #dc3545;
+        }
+        .delete-btn:hover {
+            color: white;
+        }
+        .action-btn:hover i {
+            color: white;
+        }
+        .team-text {
+            position: relative;
+        }
+        .action-buttons::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+        <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex">
+            
+          
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+            <a href="{% url 'home' %}" class="navbar-brand ms-4 ms-lg-0">
+                <h1 class="fw-bold text-primary m-0">Don<span class="text-white">Via</span></h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="{% url 'home' %}" class="nav-item nav-link">Accueil</a>
+                    <a href="{% url 'about_html' %}" class="nav-item nav-link">À propos</a>
+                    <a href="{% url 'liste_evenements' %}" class="nav-item nav-link">Événements</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'liste_volunteers' %}" class="dropdown-item active">Volontaires</a>
+                            <a href="{% url 'liste_donneurs' %}" class="dropdown-item">Dons</a>
+                            <a href="/recipients.html" class="dropdown-item">Bénéficiaires</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'contact_html' %}" class="nav-item nav-link">Contact</a>
+                </div>
+                <div class="d-none d-lg-flex ms-2">
+                    <a class="btn btn-primary py-2 px-3" href="{% url 'ajouter_donors' %}">
+                        <i class="fa fa-heart me-2"></i>
+                        Faire un don
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+
+        <!-- Navbar End -->
+
+
+    <style>
+      .page-header {
+        background: linear-gradient(rgba(138, 37, 52, 0.8), rgba(138, 37, 52, 0.8)), url("{% static 'img/TUN0635.jpg' %}") center center no-repeat;
+        background-size: cover;
+      }
+    </style>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center">
+            <h1 class="display-4 text-white animated slideInDown mb-4">Devenir Volontaire</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a class="text-white" href="{% url 'home' %}">Accueil</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Devenir volontaire</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Volunteers Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Nos Volontaires</div>
+                <h1 class="display-6 mb-5">Rejoignez notre équipe de volontaires</h1>
+            </div>
+
+            <!-- Toolbar: Search / Filter / Sort -->
+            <div class="border-0 rounded p-3 p-md-4 mb-4" style="background: linear-gradient(180deg, #ffffff 0%, #fff7f8 100%); box-shadow: 0 10px 25px rgba(138,37,52,.08);">
+                <div class="row g-3 align-items-center">
+                    <form id="vol-filter-form" class="row g-3 align-items-stretch" method="get" action="{% url 'liste_volunteers' %}">
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="vol-q" name="q" value="{{ q|default:'' }}" placeholder="Rechercher...">
+                                <label for="vol-q">Rechercher (nom, spécialité)</label>
+                                <div class="position-absolute top-50 end-0 translate-middle-y pe-3 text-muted" style="pointer-events:none;">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="vol-spec" name="specialite">
+                                    <option value="">Toutes les spécialités</option>
+                                    {% for s in specialites %}
+                                    <option value="{{ s }}" {% if current_spec == s %}selected{% endif %}>{{ s|capfirst }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="vol-spec">Spécialité</label>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <div class="form-floating">
+                                <select class="form-select" id="vol-sort" name="sort">
+                                    <option value="date_recent" {% if current_sort == 'date_recent' %}selected{% endif %}>Inscription (récent)</option>
+                                    <option value="date_ancien" {% if current_sort == 'date_ancien' %}selected{% endif %}>Inscription (ancien)</option>
+                                    <option value="age_asc" {% if current_sort == 'age_asc' %}selected{% endif %}>Âge (croissant)</option>
+                                    <option value="age_desc" {% if current_sort == 'age_desc' %}selected{% endif %}>Âge (décroissant)</option>
+                                </select>
+                                <label for="vol-sort">Trier par</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 d-flex gap-2 align-items-center">
+                            {% if q or current_spec or current_sort != 'date_recent' %}
+                            <a href="{% url 'liste_volunteers' %}" class="btn btn-light border d-inline-flex align-items-center">
+                                <i class="fas fa-times me-2"></i> Réinitialiser
+                            </a>
+                            {% endif %}
+                            <div class="d-none d-md-inline text-muted small">Astuce: la recherche s'applique automatiquement</div>
+                        </div>
+                    </form>
+                    <div class="col-12 col-md-2 text-md-end mt-2">
+                        <a href="{% url 'ajouter_volunteer' %}" class="btn btn-primary w-100">
+                            <i class="fa fa-user-plus me-2"></i> Ajouter
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-2 small text-muted" id="vol-meta"></div>
+            </div>
+
+            <!-- Centered Results Modal -->
+            <div class="modal fade" id="resultsModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header border-0">
+                    <h5 class="modal-title">Résultats</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="modal-results" class="row g-4"></div>
+                  </div>
+                  <div class="modal-footer border-0 d-flex justify-content-between">
+                    <div class="small text-muted" id="modal-count"></div>
+                    <a id="modal-see-all" href="#" class="btn btn-outline-primary">Voir tout</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Volunteer Statistics (dynamic) -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="bg-white text-center p-4 rounded shadow-sm border">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-users fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_total|default:0 }}</h3>
+                        <p class="mb-0">Volontaires actifs</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="bg-white text-center p-4 rounded shadow-sm border">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-user-md fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_medecin|default:0 }}</h3>
+                        <p class="mb-0">Médecins volontaires</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="bg-white text-center p-4 rounded shadow-sm border">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-heartbeat fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_infermier|default:0 }}</h3>
+                        <p class="mb-0">Infirmiers volontaires</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="bg-white text-center p-4 rounded shadow-sm border">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-brain fs-4"></i>
+                        </div>
+                        <h3 class="text-primary mb-2">{{ stat_psychologue|default:0 }}</h3>
+                        <p class="mb-0">Psychologues volontaires</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spécialités disponibles (modifié selon demande) -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="service-item bg-white text-center h-100 p-4 p-xl-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-4" style="width: 80px; height: 80px;">
+                            <i class="fa fa-user-md fs-2"></i>
+                        </div>
+                        <h4 class="mb-3">Médecin volontaire</h4>
+                        <p class="mb-4">Offrez des consultations et soins médicaux pour les personnes dans le besoin.</p>
+                        <a class="btn btn-outline-primary px-3" href="{% url 'ajouter_volunteer' %}?specialite=medecin">
+                            S'inscrire
+                            <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="service-item bg-white text-center h-100 p-4 p-xl-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-4" style="width: 80px; height: 80px;">
+                            <i class="fa fa-heartbeat fs-2"></i>
+                        </div>
+                        <h4 class="mb-3">Infirmière volontaire</h4>
+                        <p class="mb-4">Aide aux soins infirmiers, soins de base et assistance aux équipes médicales.</p>
+                        <a class="btn btn-outline-primary px-3" href="{% url 'ajouter_volunteer' %}?specialite=infermier">
+                            S'inscrire
+                            <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="service-item bg-white text-center h-100 p-4 p-xl-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-4" style="width: 80px; height: 80px;">
+                            <i class="fa fa-user fs-2"></i>
+                        </div>
+                        <h4 class="mb-3">Psychologue volontaire</h4>
+                        <p class="mb-4">Accompagnement psychologique et soutien émotionnel pour les bénéficiaires.</p>
+                        <a class="btn btn-outline-primary px-3" href="{% url 'ajouter_volunteer' %}?specialite=psychologue">
+                            S'inscrire
+                            <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registered Volunteers (dynamic) -->
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h2 class="display-6 mb-5">Nos volontaires</h2>
+            </div>
+            <!-- Result meta and active filters -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                <div class="text-muted">{{ volunteers|length }} résultat{{ volunteers|length|pluralize:"s" }}</div>
+                <div class="d-flex flex-wrap gap-2">
+                    {% if q %}
+                    <a href="{% url 'volunteer' %}?specialite={{ current_spec }}&sort={{ current_sort }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
+                        <i class="fas fa-search me-1"></i> Recherche: "{{ q }}" <span class="ms-2 text-muted">✕</span>
+                    </a>
+                    {% endif %}
+                    {% if current_spec %}
+                    <a href="{% url 'volunteer' %}?q={{ q }}&sort={{ current_sort }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
+                        <i class="fas fa-filter me-1"></i> Spécialité: {{ current_spec|capfirst }} <span class="ms-2 text-muted">✕</span>
+                    </a>
+                    {% endif %}
+                    {% if current_sort != 'date_recent' %}
+                    <a href="{% url 'liste_volunteers' %}?q={{ q }}&specialite={{ current_spec }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
+                        <i class="fas fa-sort me-1"></i> Tri:
+                        {% if current_sort == 'date_recent' %} Inscription (récent)
+                        {% elif current_sort == 'date_ancien' %} Inscription (ancien)
+                        {% elif current_sort == 'age_asc' %} Âge (croissant)
+                        {% elif current_sort == 'age_desc' %} Âge (décroissant)
+                        {% else %} Tri personnalisé{% endif %}
+                        <span class="ms-2 text-muted">✕</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="volunteers-list" class="row g-4">
+                {% if volunteers %}
+                    {% for v in volunteers %}
+                    <div class="col-lg-4 col-md-6 wow fadeInUp">
+                        <div class="team-item position-relative rounded overflow-hidden shadow-sm border-0" style="transition:transform .2s, box-shadow .2s;">
+                            <div class="overflow-hidden">
+                                {% if v.photo %}
+                                <img class="img-fluid" src="{{ v.photo.url }}" alt="">
+                                {% else %}
+                                <img class="img-fluid" src="{% static 'img/team-1.jpg' %}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="team-text bg-light text-center p-4 border-top">
+                                <div class="volunteer-actions">
+                                    <a href="{% url 'edit_volunteer' v.pk %}" class="action-btn btn-edit" data-label="Modifier" title="Modifier ce volontaire">
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="{% url 'delete_volunteer' v.pk %}" class="action-btn btn-delete" data-label="Supprimer" title="Supprimer ce volontaire (confirmation)">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <h5 class="vol-name">{{ v.nom }} {{ v.prenom }}</h5>
+                                <p class="text-primary mb-1 vol-spec">{{ v.specialite|default:"" }}</p>
+                                {% if v.disponibilite %}
+                                <span class="badge bg-secondary mb-2">{{ v.get_disponibilite_display }}</span>
+                                {% endif %}
+                                <p class="small text-muted mb-1">Inscrit le {{ v.date_inscription|date:'d/m/Y' }}</p>
+                                <p class="small">Age: {{ v.age|default:"" }} · Ville: {{ v.ville|default:v.adresse|default:"" }}</p>
+                                <p class="small">Email: {{ v.email|default:"" }} · Tel: {{ v.telephone|default:"" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12"><div class="alert alert-info">Aucun volontaire enregistré.</div></div>
+                    {% endfor %}
+                    <script>window.SERVER_VOLUNTEERS = true;</script>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Volunteers End -->
+
+
+
+
+
+    <!-- Benefits Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h2 class="display-6 mb-5">Avantages du volontariat</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="bg-white text-center p-4 rounded shadow h-100">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-certificate fs-4"></i>
+                        </div>
+                        <h5 class="mb-3">Certificat de reconnaissance</h5>
+                        <p class="mb-0">Recevez un certificat officiel pour vos heures de bénévolat</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="bg-white text-center p-4 rounded shadow h-100">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-users fs-4"></i>
+                        </div>
+                        <h5 class="mb-3">Réseau professionnel</h5>
+                        <p class="mb-0">Rencontrez d'autres professionnels partageant vos valeurs</p>
+                        </div>
+                    </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="bg-white text-center p-4 rounded shadow h-100">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-graduation-cap fs-4"></i>
+                        </div>
+                        <h5 class="mb-3">Formation continue</h5>
+                        <p class="mb-0">Accédez à des formations spécialisées gratuites</p>
+                        </div>
+                    </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="bg-white text-center p-4 rounded shadow h-100">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-heart fs-4"></i>
+                        </div>
+                        <h5 class="mb-3">Impact positif</h5>
+                        <p class="mb-0">Contribuez directement à améliorer des vies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Benefits End -->
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h1 class="fw-bold text-primary mb-4">Don<span class="text-white">Via</span></h1>
+                    <p>Nos volontaires sont le cœur de notre organisation. Rejoignez-nous pour faire une différence.</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square me-1" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square me-1" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Adresse</h5>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Rue, New York, USA</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p><i class="fa fa-envelope me-3"></i>info@chariteam.com</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Liens rapides</h5>
+                    <a class="btn btn-link" href="{% url 'about_html' %}">À propos</a>
+                    <a class="btn btn-link" href="{% url 'contact_html' %}">Contact</a>
+                    <a class="btn btn-link" href="{% url 'ajouter_donors' %}">Faire un don</a>
+                    <a class="btn btn-link" href="{% url 'liste_evenements' %}">Événements</a>
+                    <a class="btn btn-link" href="{% url 'ajouter_volunteer' %}">Devenir volontaire</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Newsletter</h5>
+                    <p>Recevez des informations sur les opportunités de volontariat.</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Votre email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">S'inscrire</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="#">DonVia</a>, Tous droits réservés.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        Conçu par <a href="https://htmlcodex.com">HTML Codex</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script>
+      // Auto-preview results in a centered modal (no full page reload)
+      (function(){
+        const form = document.getElementById('vol-filter-form');
+        if (!form) return;
+        const q = form.querySelector('#vol-q');
+        const spec = form.querySelector('#vol-spec');
+        const sort = form.querySelector('#vol-sort');
+        const modalEl = document.getElementById('resultsModal');
+        const modalBody = document.getElementById('modal-results');
+        const modalCount = document.getElementById('modal-count');
+        const seeAll = document.getElementById('modal-see-all');
+        const modal = new bootstrap.Modal(modalEl);
+
+        function buildUrl(){
+          const params = new URLSearchParams();
+          if (q && q.value.trim()) params.set('q', q.value.trim());
+          if (spec && spec.value) params.set('specialite', spec.value);
+          if (sort && sort.value) params.set('sort', sort.value);
+          return form.action + (params.toString() ? ('?' + params.toString()) : '');
+        }
+        async function preview(){
+          const url = buildUrl();
+          seeAll.href = url;
+          try{
+            const res = await fetch(url, {headers: {'X-Requested-With':'XMLHttpRequest'}});
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const list = doc.querySelector('#volunteers-list');
+            const countText = doc.querySelector('.text-muted')?.textContent || '';
+            modalBody.innerHTML = list ? list.innerHTML : '<div class="col-12"><div class="alert alert-info">Aucun résultat</div></div>';
+            modalCount.textContent = countText;
+            modal.show();
+          } catch(e){
+            modalBody.innerHTML = '<div class="col-12"><div class="alert alert-danger">Impossible de charger les résultats.</div></div>';
+            modal.show();
+          }
+        }
+        let t;
+        if (q){ q.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(preview, 400); }); }
+        if (spec){ spec.addEventListener('change', preview); }
+        if (sort){ sort.addEventListener('change', preview); }
+      })();
+
+      // Volunteers storage key
+      const VOL_KEY = 'donvia_volunteers';
+
+        function loadVolunteers() {
+            try { return JSON.parse(localStorage.getItem(VOL_KEY) || '[]'); } catch (e) { return []; }
+        }
+
+        function saveVolunteers(list) { localStorage.setItem(VOL_KEY, JSON.stringify(list)); }
+
+        function escapeHtml(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+        function renderVolunteers() {
+            const container = document.getElementById('volunteers-list');
+            if (!container) return;
+
+            const list = loadVolunteers();
+            if (!list.length) {
+                container.innerHTML = '<div class="col-12"><div class="alert alert-info">Aucun volontaire enregistré.</div></div>';
+                return;
+            }
+
+            let html = '';
+            list.forEach(v => {
+                const img = v.photo || "{% static 'img/team-1.jpg' %}";
+                const ville = v.ville || v.adresse || '';
+                const specialty = v.specialite || v.type || '';
+                html += `
+                <div class="col-lg-4 col-md-6 wow fadeInUp">
+                    <div class="team-item position-relative rounded overflow-hidden">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" src="${escapeHtml(img)}" alt="">
+                        </div>
+                        <div class="team-text bg-light text-center p-4">
+                            <div class="volunteer-actions">
+                                <a href="ajout_volunteer.html?id=${encodeURIComponent(v.id)}" 
+                                   class="action-btn btn-edit"
+                                   data-label="Modifier"
+                                   aria-label="Modifier le volontaire ${escapeHtml(v.nom)} ${escapeHtml(v.prenom)}"
+                                   title="Modifier ce volontaire">
+                                    <i class="fas fa-edit" aria-hidden="true"></i>
+                                </a>
+                                <a href="supp_volanteer.html?id=${encodeURIComponent(v.id)}"
+                                   class="action-btn btn-delete"
+                                   data-label="Supprimer"
+                                   aria-label="Supprimer le volontaire ${escapeHtml(v.nom)} ${escapeHtml(v.prenom)}"
+                                   title="Supprimer ce volontaire (confirmation)">
+                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <h5>${escapeHtml(v.nom)} ${escapeHtml(v.prenom)}</h5>
+                            <p class="text-primary">${escapeHtml(specialty)}</p>
+                            <p class="small">Age: ${escapeHtml(v.age || '')} · Ville: ${escapeHtml(ville)}</p>
+                            <p class="small">Email: ${escapeHtml(v.email || '')} · Tel: ${escapeHtml(v.telephone || '')}</p>
+                        </div>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Filtering / Sorting state
+        const VOL_STATE = {
+            q: '',
+            spec: '',
+            sort: 'recent',
+        };
+
+        function normalize(s){ return (s||'').toString().toLowerCase().trim(); }
+
+        function applyFilters(list){
+            let res = [...list];
+            if (VOL_STATE.q) {
+                const q = normalize(VOL_STATE.q);
+                res = res.filter(v =>
+                    normalize(v.nom).includes(q) ||
+                    normalize(v.prenom).includes(q) ||
+                    normalize(v.ville || v.adresse).includes(q) ||
+                    normalize(v.email).includes(q)
+                );
+            }
+            if (VOL_STATE.spec) {
+                res = res.filter(v => normalize(v.specialite || v.type) === normalize(VOL_STATE.spec));
+            }
+            switch (VOL_STATE.sort) {
+                case 'name':
+                    res.sort((a,b)=> normalize(a.nom).localeCompare(normalize(b.nom)) || normalize(a.prenom).localeCompare(normalize(b.prenom)) );
+                    break;
+                case 'city':
+                    res.sort((a,b)=> normalize(a.ville||a.adresse).localeCompare(normalize(b.ville||b.adresse)) );
+                    break;
+                default:
+                    // recent: rely on id timestamp if created by uid(), else no-op
+                    res.sort((a,b)=> String(b.id).localeCompare(String(a.id)) );
+            }
+            return res;
+        }
+
+        function getSpecialties(list){
+            const set = new Set();
+            list.forEach(v => { const s = (v.specialite || v.type || '').trim(); if (s) set.add(s); });
+            return Array.from(set).sort((a,b)=>a.localeCompare(b));
+        }
+
+        function populateFilters(list){
+            const specSel = document.getElementById('vol-spec');
+            if (!specSel) return;
+            const current = specSel.value;
+            specSel.innerHTML = '<option value="">Toutes les spécialités</option>' + getSpecialties(list).map(s=>`<option value="${s}">${s}</option>`).join('');
+            if (current) specSel.value = current;
+        }
+
+        function updateMeta(total, shown){
+            const el = document.getElementById('vol-meta');
+            if (el) el.textContent = shown < total ? `${shown} affichés sur ${total}` : `${total} volontaires`;
+        }
+
+        function deleteVolunteer(id) {
+            if (!confirm('Supprimer ce volontaire ?')) return;
+            const list = loadVolunteers().filter(v => v.id !== id);
+            saveVolunteers(list);
+            const shown = applyFilters(list);
+            populateFilters(list);
+            renderVolunteersList(shown, list.length);
+        }
+
+        function renderVolunteersList(list, total){
+            const container = document.getElementById('volunteers-list');
+            if (!container) return;
+            if (!list.length) {
+                container.innerHTML = '<div class="col-12"><div class="alert alert-info d-flex justify-content-between align-items-center">Aucun volontaire trouvé.<a href="ajout_volunteer.html" class="btn btn-sm btn-primary">Ajouter</a></div></div>';
+            } else {
+                let html = '';
+                list.forEach(v => {
+                    const img = v.photo || "{% static 'img/team-1.jpg' %}";
+                    const ville = v.ville || v.adresse || '';
+                    const specialty = v.specialite || v.type || '';
+                    html += `
+                    <div class="col-lg-4 col-md-6 wow fadeInUp">
+                        <div class="team-item position-relative rounded overflow-hidden">
+                            <div class="overflow-hidden">
+                                <img class="img-fluid" src="${escapeHtml(img)}" alt="">
+                            </div>
+                            <div class="team-text bg-light text-center p-4">
+                                <div class="volunteer-actions">
+                                    <a href="ajout_volunteer.html?id=${encodeURIComponent(v.id)}" class="action-btn btn-edit" data-label="Modifier" title="Modifier">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="supp_volanteer.html?id=${encodeURIComponent(v.id)}" class="action-btn btn-delete" data-label="Supprimer" title="Supprimer (confirmation)">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                                <h5>${escapeHtml(v.nom)} ${escapeHtml(v.prenom)}</h5>
+                                <p class="text-primary">${escapeHtml(specialty)}</p>
+                                <p class="small">Age: ${escapeHtml(v.age || '')} · Ville: ${escapeHtml(ville)}</p>
+                                <p class="small">Email: ${escapeHtml(v.email || '')} · Tel: ${escapeHtml(v.telephone || '')}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                container.innerHTML = html;
+            }
+            updateMeta(total, list.length);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof window.SERVER_VOLUNTEERS !== 'undefined' && window.SERVER_VOLUNTEERS) {
+                return; // Ne pas écraser le rendu serveur
+            }
+            const all = loadVolunteers();
+            populateFilters(all);
+            renderVolunteersList(applyFilters(all), all.length);
+        });
+
+        const q = document.getElementById('vol-q');
+        const spec = document.getElementById('vol-spec');
+        const sort = document.getElementById('vol-sort');
+        if (q) q.addEventListener('input', () => { VOL_STATE.q = q.value; const all = loadVolunteers(); renderVolunteersList(applyFilters(all), all.length); });
+        if (spec) spec.addEventListener('change', () => { VOL_STATE.spec = spec.value; const all = loadVolunteers(); renderVolunteersList(applyFilters(all), all.length); });
+        if (sort) sort.addEventListener('change', () => { VOL_STATE.sort = sort.value; const all = loadVolunteers(); renderVolunteersList(applyFilters(all), all.length); });
+    </script>
+</body>
+
+</html>

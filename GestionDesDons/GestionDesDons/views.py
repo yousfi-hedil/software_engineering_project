@@ -1,8 +1,10 @@
-# GestionProjet/views.py
 from django.shortcuts import render
 
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'main/index.html')
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'main/about.html')
+
+def contact(request):
+    return render(request, 'main/contact.html')

@@ -5,6 +5,12 @@ from django.urls import reverse_lazy
 from .forms import EvenementForm  
 
 
+from django.shortcuts import render
+
+def volunteer(request):
+    return render(request, "Evenement/volunteer.html")
+
+
 def liste_evenements(request):
     evenements = Evenement.objects.all()
     return render(request, "Evenement/list_event.html", {"liste": evenements})
