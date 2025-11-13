@@ -42,9 +42,15 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestionnaire</a>
                         <div class="dropdown-menu m-0">
+
                             <a href="{% url 'volontaires:liste_volunteers' %}" class="dropdown-item">Volontaires</a>
                             <a href="{% url 'sang:liste_sangs' %}" class="dropdown-item">Dons</a>
                             <a href="{% url 'doneurs:liste_donneurs' %}" class="dropdown-item">Bénéficiaires</a>
+=======
+                            <a href="{% url 'volontaires:liste_volunteers' %}" class="dropdown-item">Volontaires</a>
+                            <a href="{% url 'sang:liste_sangs' %}" class="dropdown-item">Dons</a>
+                            <a href="{% url 'doneurs:liste_donneurs' %}" class="dropdown-item">Bénéficiaires</a>
+
                         </div>
                     </div>
                     <a href="{% url 'contact_html' %}" class="nav-item nav-link">Contact</a>
