@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>DonVia - Liste Demandeurs</title>
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="mb-4">Liste des Demandeurs</h2>
+  <a href="{% url 'add_demandeur' %}" class="btn btn-primary mb-3">Ajouter un Demandeur</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for demandeur in demandeurs %}
+      <tr>
+        <td>{{ demandeur.nom_user }}</td>
+        <td>{{ demandeur.prenom_user }}</td>
+        <td>{{ demandeur.email_user }}</td>
+        <td>
+          <a href="{% url 'detail_demandeur' demandeur.pk %}" class="btn btn-info btn-sm">Details</a>
+          <a href="{% url 'edit_demandeur' demandeur.pk %}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="{% url 'delete_demandeur' demandeur.pk %}" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
