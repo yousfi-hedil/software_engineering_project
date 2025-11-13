@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>DonVia - Détails Demandeur</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top px-0">
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5">
+            <a href="{% url 'list_demandeur' %}" class="navbar-brand ms-4 ms-lg-0">
+                <h1 class="fw-bold text-primary m-0">Don<span class="text-white">Via</span></h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="{% url 'list_demandeur' %}" class="nav-item nav-link">Liste des Demandeurs</a>
+                    <a href="{% url 'add_demandeur' %}" class="nav-item nav-link">Ajouter Demandeur</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Detail Section Start -->
+    <div class="container" style="padding-top: 150px; min-height: 80vh;">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="mb-0">
+                                <i class="fa fa-user me-2"></i>
+                                Détails du Demandeur
+                            </h3>
+                            <div>
+                                <a href="{% url 'update_demandeur' demandeur.pk %}" class="btn btn-warning btn-sm me-2">
+                                    <i class="fa fa-edit me-1"></i>Modifier
+                                </a>
+                                <a href="{% url 'delete_demandeur' demandeur.pk %}" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash me-1"></i>Supprimer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-5">
+                        <!-- Informations personnelles -->
+                        <h4 class="border-bottom pb-2 mb-4">
+                            <i class="fa fa-id-card text-primary me-2"></i>
+                            Informations Personnelles
+                        </h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">CIN :</strong>
+                                    <p class="mb-0 mt-2">{{ demandeur.cin_user }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Nom Complet :</strong>
+                                    <p class="mb-0 mt-2">{{ demandeur.nom_user }} {{ demandeur.prenom_user }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Sexe :</strong>
+                                    <p class="mb-0 mt-2">
+                                        {% if demandeur.sexe_user == 'Masculin' %}
+                                            <i class="fa fa-mars text-info me-1"></i>
+                                        {% else %}
+                                            <i class="fa fa-venus text-danger me-1"></i>
+                                        {% endif %}
+                                        {{ demandeur.sexe_user }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Date de Naissance :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <i class="fa fa-calendar text-warning me-1"></i>
+                                        {{ demandeur.date_naissance|date:"d/m/Y" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coordonnées -->
+                        <h4 class="border-bottom pb-2 mb-4">
+                            <i class="fa fa-address-book text-success me-2"></i>
+                            Coordonnées
+                        </h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Email :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <i class="fa fa-envelope text-info me-1"></i>
+                                        <a href="mailto:{{ demandeur.email_user }}">{{ demandeur.email_user }}</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Téléphone :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <i class="fa fa-phone text-success me-1"></i>
+                                        <a href="tel:{{ demandeur.telephone_user }}">{{ demandeur.telephone_user }}</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Adresse :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <i class="fa fa-map-marker-alt text-danger me-1"></i>
+                                        {{ demandeur.adresse }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Institution -->
+                        <h4 class="border-bottom pb-2 mb-4">
+                            <i class="fa fa-building text-info me-2"></i>
+                            Institution
+                        </h4>
+                        <div class="row mb-4">
+                            <div class="col-md-12 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Institution :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <i class="fa fa-hospital text-primary me-1"></i>
+                                        {{ demandeur.institution }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Documents et Inscription -->
+                        <h4 class="border-bottom pb-2 mb-4">
+                            <i class="fa fa-file-alt text-warning me-2"></i>
+                            Documents et Inscription
+                        </h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Date d'Inscription :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <i class="fa fa-clock text-info me-1"></i>
+                                        {{ demandeur.date_inscription_user|date:"d/m/Y à H:i" }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Rôle :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <span class="badge bg-primary">{{ demandeur.role }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            {% if demandeur.justificatifs %}
+                            <div class="col-md-12 mb-3">
+                                <div class="bg-light p-3 rounded">
+                                    <strong class="text-primary">Documents Justificatifs :</strong>
+                                    <p class="mb-0 mt-2">
+                                        <a href="{{ demandeur.justificatifs.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                            <i class="fa fa-download me-1"></i>
+                                            Télécharger le document
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="text-center mt-4">
+                            <a href="{% url 'list_demandeur' %}" class="btn btn-secondary btn-lg">
+                                <i class="fa fa-arrow-left me-2"></i>Retour à la liste
+                            </a>
+                            <a href="{% url 'update_demandeur' demandeur.pk %}" class="btn btn-warning btn-lg">
+                                <i class="fa fa-edit me-2"></i>Modifier
+                            </a>
+                            <a href="{% url 'delete_demandeur' demandeur.pk %}" class="btn btn-danger btn-lg">
+                                <i class="fa fa-trash me-2"></i>Supprimer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Detail Section End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h1 class="fw-bold text-primary mb-4">Don<span class="text-white">Via</span></h1>
+                    <p>Ensemble, créons un impact positif.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="#">DonVia</a>, Tous droits réservés.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

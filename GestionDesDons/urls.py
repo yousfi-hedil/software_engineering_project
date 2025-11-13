@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('GestionDoneurs.urls')),
     path('', include('GestionVolontaires.urls')),
+    path('demandeurs/', include('GestionDemandeurs.urls')),
+
 
     # Public pages
     path('', RedirectView.as_view(url='/index.html', permanent=False), name='home'),
