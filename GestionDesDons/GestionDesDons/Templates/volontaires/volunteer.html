@@ -295,19 +295,19 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="{% url 'home' %}" class="nav-item nav-link">Accueil</a>
                     <a href="{% url 'about_html' %}" class="nav-item nav-link">À propos</a>
-                    <a href="{% url 'liste_evenements' %}" class="nav-item nav-link">Événements</a>
+                    <a href="{% url 'evenement:liste_evenements' %}" class="nav-item nav-link">Événements</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestionnaire</a>
                         <div class="dropdown-menu m-0">
-                            <a href="{% url 'liste_volunteers' %}" class="dropdown-item active">Volontaires</a>
-                            <a href="{% url 'liste_donneurs' %}" class="dropdown-item">Dons</a>
+                            <a href="{% url 'volontaires:liste_volunteers' %}" class="dropdown-item active">Volontaires</a>
+                            <a href="{% url 'sang:liste_sangs' %}" class="dropdown-item">Dons</a>
                             <a href="/recipients.html" class="dropdown-item">Bénéficiaires</a>
                         </div>
                     </div>
                     <a href="{% url 'contact_html' %}" class="nav-item nav-link">Contact</a>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
-                    <a class="btn btn-primary py-2 px-3" href="{% url 'ajouter_donors' %}">
+                    <a class="btn btn-primary py-2 px-3" href="{% url 'doneurs:ajouter_donors' %}">
                         <i class="fa fa-heart me-2"></i>
                         Faire un don
                     </a>
@@ -334,7 +334,7 @@
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a class="text-white" href="{% url 'home' %}">Accueil</a></li>
-                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Gestionnaire</a></li>
                     <li class="breadcrumb-item text-primary active" aria-current="page">Devenir volontaire</li>
                 </ol>
             </nav>
@@ -354,7 +354,7 @@
             <!-- Toolbar: Search / Filter / Sort -->
             <div class="border-0 rounded p-3 p-md-4 mb-4" style="background: linear-gradient(180deg, #ffffff 0%, #fff7f8 100%); box-shadow: 0 10px 25px rgba(138,37,52,.08);">
                 <div class="row g-3 align-items-center">
-                    <form id="vol-filter-form" class="row g-3 align-items-stretch" method="get" action="{% url 'liste_volunteers' %}">
+                    <form id="vol-filter-form" class="row g-3 align-items-stretch" method="get" action="{% url 'volontaires:liste_volunteers' %}">
                         <div class="col-12 col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="vol-q" name="q" value="{{ q|default:'' }}" placeholder="Rechercher...">
@@ -388,7 +388,7 @@
                         </div>
                         <div class="col-12 col-md-3 d-flex gap-2 align-items-center">
                             {% if q or current_spec or current_sort != 'date_recent' %}
-                            <a href="{% url 'liste_volunteers' %}" class="btn btn-light border d-inline-flex align-items-center">
+                            <a href="{% url 'volontaires:liste_volunteers' %}" class="btn btn-light border d-inline-flex align-items-center">
                                 <i class="fas fa-times me-2"></i> Réinitialiser
                             </a>
                             {% endif %}
@@ -396,7 +396,7 @@
                         </div>
                     </form>
                     <div class="col-12 col-md-2 text-md-end mt-2">
-                        <a href="{% url 'ajouter_volunteer' %}" class="btn btn-primary w-100">
+                        <a href="{% url 'volontaires:ajouter_volunteer' %}" class="btn btn-primary w-100">
                             <i class="fa fa-user-plus me-2"></i> Ajouter
                         </a>
                     </div>
@@ -472,7 +472,7 @@
                         </div>
                         <h4 class="mb-3">Médecin volontaire</h4>
                         <p class="mb-4">Offrez des consultations et soins médicaux pour les personnes dans le besoin.</p>
-                        <a class="btn btn-outline-primary px-3" href="{% url 'ajouter_volunteer' %}?specialite=medecin">
+                        <a class="btn btn-outline-primary px-3" href="{% url 'volontaires:ajouter_volunteer' %}?specialite=medecin">
                             S'inscrire
                             <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                 <i class="fa fa-arrow-right"></i>
@@ -487,7 +487,7 @@
                         </div>
                         <h4 class="mb-3">Infirmière volontaire</h4>
                         <p class="mb-4">Aide aux soins infirmiers, soins de base et assistance aux équipes médicales.</p>
-                        <a class="btn btn-outline-primary px-3" href="{% url 'ajouter_volunteer' %}?specialite=infermier">
+                        <a class="btn btn-outline-primary px-3" href="{% url 'volontaires:ajouter_volunteer' %}?specialite=infermier">
                             S'inscrire
                             <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                 <i class="fa fa-arrow-right"></i>
@@ -502,7 +502,7 @@
                         </div>
                         <h4 class="mb-3">Psychologue volontaire</h4>
                         <p class="mb-4">Accompagnement psychologique et soutien émotionnel pour les bénéficiaires.</p>
-                        <a class="btn btn-outline-primary px-3" href="{% url 'ajouter_volunteer' %}?specialite=psychologue">
+                        <a class="btn btn-outline-primary px-3" href="{% url 'volontaires:ajouter_volunteer' %}?specialite=psychologue">
                             S'inscrire
                             <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                 <i class="fa fa-arrow-right"></i>
@@ -531,7 +531,7 @@
                     </a>
                     {% endif %}
                     {% if current_sort != 'date_recent' %}
-                    <a href="{% url 'liste_volunteers' %}?q={{ q }}&specialite={{ current_spec }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
+                    <a href="{% url 'volontaires:liste_volunteers' %}?q={{ q }}&specialite={{ current_spec }}" class="badge bg-light text-dark border rounded-pill text-decoration-none px-3 py-2">
                         <i class="fas fa-sort me-1"></i> Tri:
                         {% if current_sort == 'date_recent' %} Inscription (récent)
                         {% elif current_sort == 'date_ancien' %} Inscription (ancien)
@@ -557,10 +557,10 @@
                             </div>
                             <div class="team-text bg-light text-center p-4 border-top">
                                 <div class="volunteer-actions">
-                                    <a href="{% url 'edit_volunteer' v.pk %}" class="action-btn btn-edit" data-label="Modifier" title="Modifier ce volontaire">
+                                    <a href="{% url 'volontaires:edit_volunteer' v.pk %}" class="action-btn btn-edit" data-label="Modifier" title="Modifier ce volontaire">
                                         <i class="fas fa-edit" aria-hidden="true"></i>
                                     </a>
-                                    <a href="{% url 'delete_volunteer' v.pk %}" class="action-btn btn-delete" data-label="Supprimer" title="Supprimer ce volontaire (confirmation)">
+                                    <a href="{% url 'volontaires:delete_volunteer' v.pk %}" class="action-btn btn-delete" data-label="Supprimer" title="Supprimer ce volontaire (confirmation)">
                                         <i class="fas fa-trash" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -662,9 +662,9 @@
                     <h5 class="text-light mb-4">Liens rapides</h5>
                     <a class="btn btn-link" href="{% url 'about_html' %}">À propos</a>
                     <a class="btn btn-link" href="{% url 'contact_html' %}">Contact</a>
-                    <a class="btn btn-link" href="{% url 'ajouter_donors' %}">Faire un don</a>
-                    <a class="btn btn-link" href="{% url 'liste_evenements' %}">Événements</a>
-                    <a class="btn btn-link" href="{% url 'ajouter_volunteer' %}">Devenir volontaire</a>
+                    <a class="btn btn-link" href="{% url 'doneurs:ajouter_donors' %}">Faire un don</a>
+                    <a class="btn btn-link" href="{% url 'evenement:liste_evenements' %}">Événements</a>
+                    <a class="btn btn-link" href="{% url 'volontaires:ajouter_volunteer' %}">Devenir volontaire</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Newsletter</h5>

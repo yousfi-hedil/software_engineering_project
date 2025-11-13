@@ -1,0 +1,52 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1 style="text-align:center; margin-bottom:20px;">Liste des doneurs</h1>
+
+<div style="text-align:center; margin-bottom:20px;">
+    <a href="{% url 'doneurs:admin_donor_add' %}" 
+       style="padding:8px 16px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+       Ajouter un donateur
+    </a>
+</div>
+
+<div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse: collapse; min-width:800px;">
+        <thead style="background-color:#f4eaea;">
+            <tr>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Nom</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Prénom</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Email</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Téléphone</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Groupe sanguin</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in liste %}
+            <tr style="text-align:center;">
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ d.nom }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ d.prenom }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ d.mail }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ d.telephone }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ d.blood_group }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">
+                    <a href="{% url 'doneurs:admin_donor_update' d.pk %}" 
+                       style="padding:6px 12px; margin-right:5px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+                       Modifier
+                    </a>
+                    <a href="{% url 'doneurs:admin_donor_delete' d.pk %}" 
+                       style="padding:6px 12px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+                       Supprimer
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align:center; padding:12px;">Aucun doneurs trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1>Supprimer un événement</h1>
+<p>Voulez-vous vraiment supprimer l'événement : <strong>{{ object.titre }}</strong> ?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="padding:10px 18px; border:none; border-radius:8px; background:var(--primary-color); color:white;">Supprimer</button>
+    <a href="{% url 'evenement:admin_evenements' %}" style="padding:10px 18px; border-radius:8px; background:#ccc; color:#000; text-decoration:none;">Annuler</a>
+</form>
+{% endblock %}

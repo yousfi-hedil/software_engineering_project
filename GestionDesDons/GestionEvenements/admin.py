@@ -1,3 +1,4 @@
+'''
 from django.contrib import admin
 from .models import Evenement
 
@@ -25,4 +26,4 @@ class AdminEvenementModel(admin.ModelAdmin):
             return (objet.date_fin-objet.date_debut).days
         return "RAS"
     a.short_description="Duré de l'événement (jours)"
-    
+    '''

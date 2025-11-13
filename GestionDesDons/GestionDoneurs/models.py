@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class BloodDonation(models.Model):
     nom = models.CharField(max_length=100)
@@ -6,11 +7,15 @@ class BloodDonation(models.Model):
     mail = models.EmailField(blank=True)
     telephone = models.CharField(max_length=30, blank=True)
     adresse = models.CharField(max_length=255, blank=True)
+    ville = models.CharField(max_length=100, blank=True)
     poids = models.DecimalField(max_digits=5, decimal_places=1, blank=True, null=True)
     blood_group = models.CharField(max_length=5)
     maladie_chronique = models.BooleanField(default=False)
     traitement_medical = models.BooleanField(default=False)
     antecedents_recents = models.JSONField(default=list, blank=True)
+    # Date de naissance fournie par le donneur (remplace le champ "age")
+    date_naissance = models.DateField(blank=True, null=True)
+    date_inscription = models.DateField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -28,6 +33,8 @@ class RefusedDonation(models.Model):
     telephone = models.CharField(max_length=30, blank=True)
     adresse = models.CharField(max_length=255, blank=True)
     blood_group = models.CharField(max_length=5, blank=True)
+    date_naissance = models.DateField(blank=True, null=True)
+    poids = models.DecimalField(max_digits=5, decimal_places=1, blank=True, null=True)
     reasons = models.JSONField(default=list, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -1,0 +1,169 @@
+{% extends 'admin_base.html' %}
+
+{% block page_title %}
+{% if form.instance.pk %}Modifier un donateur{% else %}Ajouter un donateur{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="form-wrapper" style="max-width:900px; margin:0 auto; text-align:left;">
+    <div style="background:#f4eaea; border-radius:10px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+        <form method="post" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:16px;">
+            {% csrf_token %}
+
+            <!-- Affichage des erreurs globales (refusal_reasons) -->
+            {% if form.refusal_reasons %}
+                <div style="color:#b00020; margin-bottom:12px;">
+                    <strong>Raisons de refus possibles :</strong>
+                    <ul>
+                        {% for reason in form.refusal_reasons %}
+                            <li>{{ reason }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Nom et prénom -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <label for="{{ form.nom.id_for_label }}" style="font-weight:bold;">Nom :</label>
+                    {{ form.nom }}
+                    {% for error in form.nom.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1; min-width:200px;">
+                    <label for="{{ form.prenom.id_for_label }}" style="font-weight:bold;">Prénom :</label>
+                    {{ form.prenom }}
+                    {% for error in form.prenom.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Email et téléphone -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.mail.id_for_label }}" style="font-weight:bold;">Email :</label>
+                    {{ form.mail }}
+                    {% for error in form.mail.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.telephone.id_for_label }}" style="font-weight:bold;">Téléphone :</label>
+                    {{ form.telephone }}
+                    {% for error in form.telephone.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Adresse et Ville -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.adresse.id_for_label }}" style="font-weight:bold;">Adresse :</label>
+                    {{ form.adresse }}
+                    {% for error in form.adresse.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.ville.id_for_label }}" style="font-weight:bold;">Ville :</label>
+                    {{ form.ville }}
+                    {% for error in form.ville.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Poids et Groupe sanguin -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.poids.id_for_label }}" style="font-weight:bold;">Poids (kg) :</label>
+                    {{ form.poids }}
+                    {% for error in form.poids.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.blood_group.id_for_label }}" style="font-weight:bold;">Groupe sanguin :</label>
+                    {{ form.blood_group }}
+                    {% for error in form.blood_group.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Traitement médical et Maladie chronique -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.traitement_medical.id_for_label }}" style="font-weight:bold;">Traitement médical :</label>
+                    {{ form.traitement_medical }}
+                    {% for error in form.traitement_medical.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.maladie_chronique.id_for_label }}" style="font-weight:bold;">Maladie chronique :</label>
+                    {{ form.maladie_chronique }}
+                    {% for error in form.maladie_chronique.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Antécédents récents -->
+            <div>
+                <label style="font-weight:bold;">Antécédents récents :</label>
+                {{ form.antecedents_recents }}
+                {% for error in form.antecedents_recents.errors %}
+                    <div style="color:#b00020">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Date de naissance et Date d'inscription -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.date_naissance.id_for_label }}" style="font-weight:bold;">Date de naissance :</label>
+                    {{ form.date_naissance }}
+                    {% for error in form.date_naissance.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.date_inscription.id_for_label }}" style="font-weight:bold;">Date d'inscription :</label>
+                    {{ form.date_inscription }}
+                    {% for error in form.date_inscription.errors %}
+                        <div style="color:#b00020">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Boutons -->
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
+                <button type="submit" style="padding:10px 18px; border:none; border-radius:8px; background:var(--primary-color); color:white; cursor:pointer; transition:0.3s;">
+                    Enregistrer
+                </button>
+                <a href="{% url 'doneurs:admin_donors' %}" style="padding:10px 18px; border-radius:8px; background:#ccc; color:#000; text-decoration:none; display:inline-block; text-align:center;">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #dec5c5;
+    font-size: 0.95rem;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 4px var(--primary-color);
+}
+</style>
+{% endblock %}

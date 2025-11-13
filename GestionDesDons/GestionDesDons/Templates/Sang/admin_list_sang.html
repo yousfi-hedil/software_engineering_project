@@ -1,0 +1,49 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1 style="text-align:center; margin-bottom:20px;">Liste des poches de sang</h1>
+
+<div style="overflow-x:auto;">
+    <a href="{% url 'sang:admin_sang_add' %}" 
+       style="padding:8px 16px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+       Ajouter un sang
+    </a>
+    <table style="width:100%; border-collapse: collapse; min-width:800px;">
+        <thead style="background-color:#f4eaea;">
+            <tr>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Groupe sanguin</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Rhesus</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Quantité</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Type de don</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Status</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Date collecte</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Date d'expiration</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Lieu de stockage</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in liste %}
+            <tr style="text-align:center;">
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.groupe_sanguin }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.rhesus }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.quantite }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.type_don }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.status }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.date_collecte }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.date_expiration }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ s.lieu_stockage }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">
+                    <a href="{% url 'sang:admin_sang_update' s.pk %}" style="padding:6px 12px; margin-right:5px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">Modifier</a>
+                    <a href="{% url 'sang:admin_sang_delete' s.pk %}" style="padding:6px 12px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" style="text-align:center; padding:12px;">Aucune poche de sang trouvée.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -25,14 +25,14 @@
           <div class="small text-muted">Groupe: {{ donation.blood_group|default:"—" }} · Email: {{ donation.mail|default:"—" }}</div>
         </div>
 
-        <form method="post" action="{% url 'delete_donor' donation.pk %}" class="d-inline">
+        <form method="post" action="{% url 'doneurs:delete_donor' donation.pk %}" class="d-inline">
           {% csrf_token %}
           <button type="submit" class="btn btn-danger"><i class="fas fa-trash me-2"></i>Supprimer</button>
         </form>
-        <a href="{% url 'liste_donneurs' %}" class="btn btn-outline-secondary ms-2"><i class="fas fa-arrow-left me-2"></i>Annuler</a>
+        <a href="{% url 'doneurs:liste_donneurs' %}" class="btn btn-outline-secondary ms-2"><i class="fas fa-arrow-left me-2"></i>Annuler</a>
         {% else %}
         <div class="alert alert-warning">Don introuvable.</div>
-        <a href="{% url 'liste_donneurs' %}" class="btn btn-outline-secondary">Retour</a>
+        <a href="{% url 'doneurs:liste_donneurs' %}" class="btn btn-outline-secondary">Retour</a>
         {% endif %}
       </div>
     </div>

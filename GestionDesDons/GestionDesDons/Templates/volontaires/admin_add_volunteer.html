@@ -1,0 +1,129 @@
+{% extends 'admin_base.html' %}
+
+{% block page_title %}
+{% if form.instance.pk %}Modifier un volontaire{% else %}Ajouter un volontaire{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="form-wrapper" style="max-width:900px; margin:0 auto; text-align:left;">
+    <div style="background:#f4eaea; border-radius:10px; padding:25px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <form method="post" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:18px;">
+            {% csrf_token %}
+
+            <!-- Erreurs globales -->
+            {% if form.non_field_errors %}
+                <div style="background:#ffdddd; border:1px solid #b00020; border-radius:8px; padding:12px; color:#b00020;">
+                    <strong>Erreurs :</strong> {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <!-- Nom et Prénom -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <label for="{{ form.nom.id_for_label }}" style="font-weight:bold;">Nom :</label>
+                    {{ form.nom }}
+                    {% for error in form.nom.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1; min-width:200px;">
+                    <label for="{{ form.prenom.id_for_label }}" style="font-weight:bold;">Prénom :</label>
+                    {{ form.prenom }}
+                    {% for error in form.prenom.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Email et téléphone -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.email.id_for_label }}" style="font-weight:bold;">Email :</label>
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.telephone.id_for_label }}" style="font-weight:bold;">Téléphone :</label>
+                    {{ form.telephone }}
+                    {% for error in form.telephone.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Adresse et Ville -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.adresse.id_for_label }}" style="font-weight:bold;">Adresse :</label>
+                    {{ form.adresse }}
+                    {% for error in form.adresse.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.ville.id_for_label }}" style="font-weight:bold;">Ville :</label>
+                    {{ form.ville }}
+                    {% for error in form.ville.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Age et spécialité -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="{{ form.age.id_for_label }}" style="font-weight:bold;">Âge :</label>
+                    {{ form.age }}
+                    {% for error in form.age.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div style="flex:1;">
+                    <label for="{{ form.specialite.id_for_label }}" style="font-weight:bold;">Spécialité :</label>
+                    {{ form.specialite }}
+                    {% for error in form.specialite.errors %}
+                        <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Date d'inscription -->
+            <div>
+                <label for="{{ form.date_inscription.id_for_label }}" style="font-weight:bold;">Date d'inscription :</label>
+                {{ form.date_inscription }}
+                {% for error in form.date_inscription.errors %}
+                    <div style="color:#b00020; margin-top:4px;">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Boutons -->
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+                <button type="submit" style="padding:10px 18px; border:none; border-radius:8px; background:var(--primary-color); color:white; cursor:pointer; transition:0.3s;">
+                    Enregistrer
+                </button>
+                <a href="{% url 'volontaires:admin_volunteers' %}" style="padding:10px 18px; border-radius:8px; background:#ccc; color:#000; text-decoration:none; display:inline-block; text-align:center;">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #dec5c5;
+    font-size: 0.95rem;
+    background:#fff;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 6px rgba(0,123,255,0.3);
+}
+</style>
+{% endblock %}

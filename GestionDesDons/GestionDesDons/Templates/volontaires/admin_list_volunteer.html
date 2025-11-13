@@ -1,0 +1,58 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1 style="text-align:center; margin-bottom:20px;">Liste des volontaires</h1>
+
+<div style="text-align:center; margin-bottom:20px;">
+    <a href="{% url 'volontaires:admin_volunteer_add' %}" 
+       style="padding:8px 16px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+       Ajouter un volontaire
+    </a>
+</div>
+
+<div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse: collapse; min-width:900px;">
+        <thead style="background-color:#f4eaea;">
+            <tr>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Nom</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Prénom</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Email</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Téléphone</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Ville</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Adresse</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Âge</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Spécialité</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in liste %}
+            <tr style="text-align:center;">
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.nom }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.prenom }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.email }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.telephone }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.ville }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.adresse }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.age }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ v.specialite }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">
+                    <a href="{% url 'volontaires:admin_volunteer_update' v.pk %}" 
+                       style="padding:6px 12px; margin-right:5px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+                       Modifier
+                    </a>
+                    <a href="{% url 'volontaires:admin_volunteer_delete' v.pk %}" 
+                       style="padding:6px 12px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+                       Supprimer
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" style="text-align:center; padding:12px;">Aucun volontaire trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

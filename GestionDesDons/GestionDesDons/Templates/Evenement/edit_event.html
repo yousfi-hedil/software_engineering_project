@@ -50,7 +50,7 @@
                         <button type="submit" class="btn btn-primary">
                             {% if view.object.pk %}Enregistrer les modifications{% else %}Enregistrer{% endif %}
                         </button>
-                        <a href="{% if view.object.pk %}{% url 'details_evenement' view.object.pk %}{% else %}{% url 'liste_evenements' %}{% endif %}" 
+                        <a href="{% if view.object.pk %}{% url 'evenement:details_evenement' view.object.pk %}{% else %}{% url 'liste_evenements' %}{% endif %}" 
                            class="btn btn-secondary">Retour</a>
                     </div>
                 </form>

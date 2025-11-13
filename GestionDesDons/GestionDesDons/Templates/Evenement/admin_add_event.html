@@ -1,0 +1,87 @@
+{% extends 'admin_base.html' %}
+
+{% block page_title %}
+{% if form.instance.pk %}Modifier un événement{% else %}Ajouter un événement{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="table-like-wrapper" style="max-width:900px; margin:0 auto; text-align:left;">
+    <div style="background:#f4eaea; border-radius:10px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+        <form method="post" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:16px;">
+            {% csrf_token %}
+
+            <!-- Titre et description -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <label for="id_titre" style="font-weight:bold;">Titre :</label>
+                    {{ form.titre }}
+                </div>
+            </div>
+            <div style="flex:2; min-width:300px;">
+                    <label for="id_description" style="font-weight:bold;">Description :</label>
+                    {{ form.description }}
+            </div>
+
+            <!-- Dates -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="id_date_debut" style="font-weight:bold;">Date de début :</label>
+                    {{ form.date_debut }}
+                </div>
+                <div style="flex:1;">
+                    <label for="id_date_fin" style="font-weight:bold;">Date de fin :</label>
+                    {{ form.date_fin }}
+                </div>
+            </div>
+
+            <!-- Nombre de participants et statut -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="id_nb_participants" style="font-weight:bold;">Nombre de participants :</label>
+                    {{ form.nb_participants }}
+                </div>
+                <div style="flex:1;">
+                    <label for="id_statut" style="font-weight:bold;">Statut :</label>
+                    {{ form.statut }}
+                </div>
+            </div>
+
+            <!-- Lieu -->
+            <div>
+                <label for="id_lieu_evenement" style="font-weight:bold;">Lieu :</label>
+                {{ form.lieu_evenement }}
+            </div>
+
+            <!-- Boutons -->
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
+                <button type="submit" style="padding:10px 18px; border:none; border-radius:8px; background:var(--primary-color); color:white;"">
+                    Enregistrer
+                </button>
+
+                <a href="{% url 'evenement:admin_evenements' %}" style="padding:10px 18px; border-radius:8px; background:var(--primary-color); color:white; text-decoration:none; display:inline-block; text-align:center;">
+                    Annuler
+                </a>
+            </div>
+            
+
+
+
+        </form>
+    </div>
+</div>
+
+<style>
+input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #dec5c5;
+    font-size: 0.95rem;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 4px var(--primary-color);
+}
+</style>
+{% endblock %}

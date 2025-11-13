@@ -8,15 +8,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Pages publiques
-    path('', home, name='home'),                  # Accueil
-    path('about/', about, name='about_html'),     # À propos
-    path('contact/', contact, name='contact_html'),  # Contact
+    path('', home, name='home'),
+    path('about/', about, name='about_html'),
+    path('contact/', contact, name='contact_html'),
 
-    # Apps
-    path('evenements/', include('GestionEvenements.urls')),  # Événements
-    path('donors/', include('GestionDoneurs.urls')),        # Donateurs
-    path('volunteers/', include('GestionVolontaires.urls')), # Volontaires
-    path('sang/', include('GestionSang.urls')),             # Sang
+    # Apps avec namespace
+    path('evenements/', include(('GestionEvenements.urls', 'evenement'), namespace='evenement')),
+    path('donors/', include(('GestionDoneurs.urls', 'doneurs'), namespace='doneurs')),
+    path('volunteers/', include(('GestionVolontaires.urls'), namespace='volontaires')),
+    path('sang/', include(('GestionSang.urls', 'sang'), namespace='sang')),
 ]
 
 if settings.DEBUG:

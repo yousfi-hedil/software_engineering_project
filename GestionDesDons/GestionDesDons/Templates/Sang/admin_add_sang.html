@@ -1,0 +1,87 @@
+{% extends 'admin_base.html' %}
+
+{% block page_title %}
+{% if form.instance.pk %}Modifier une poche de sang{% else %}Ajouter une poche de sang{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="table-like-wrapper" style="max-width:900px; margin:0 auto; text-align:left;">
+    <div style="background:#f4eaea; border-radius:10px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+        <form method="post" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:16px;">
+            {% csrf_token %}
+
+            <!-- Groupe sanguin et Rhesus -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <label for="id_groupe_sanguin" style="font-weight:bold;">Groupe sanguin :</label>
+                    {{ form.groupe_sanguin }}
+                </div>
+                <div style="flex:1; min-width:100px;">
+                    <label for="id_rhesus" style="font-weight:bold;">Rhesus :</label>
+                    {{ form.rhesus }}
+                </div>
+            </div>
+
+            <!-- Quantité et type de don -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="id_quantite" style="font-weight:bold;">Quantité (L) :</label>
+                    {{ form.quantite }}
+                </div>
+                <div style="flex:1;">
+                    <label for="id_type_don" style="font-weight:bold;">Type de don :</label>
+                    {{ form.type_don }}
+                </div>
+            </div>
+
+            <!-- Status, date de collecte et date d'expiration -->
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label for="id_status" style="font-weight:bold;">Status :</label>
+                    {{ form.status }}
+                </div>
+                <div style="flex:1;">
+                    <label for="id_date_collecte" style="font-weight:bold;">Date de collecte :</label>
+                    {{ form.date_collecte }}
+                </div>
+                <div style="flex:1;">
+                    <label for="id_date_expiration" style="font-weight:bold;">Date d'expiration :</label>
+                    {{ form.date_expiration }}
+                </div>
+            </div>
+
+            <!-- Lieu de stockage -->
+            <div>
+                <label for="id_lieu_stockage" style="font-weight:bold;">Lieu de stockage :</label>
+                {{ form.lieu_stockage }}
+            </div>
+
+            <!-- Boutons -->
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
+                <button type="submit" style="padding:10px 18px; border:none; border-radius:8px; background:var(--primary-color); color:white; cursor:pointer; transition:0.3s;">
+                    Enregistrer
+                </button>
+
+                <a href="{% url 'sang:admin_sangs' %}" style="padding:10px 18px; border-radius:8px; background:var(--primary-color); color:white; text-decoration:none; display:inline-block; text-align:center;">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #dec5c5;
+    font-size: 0.95rem;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 4px var(--primary-color);
+}
+</style>
+{% endblock %}

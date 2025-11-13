@@ -5,8 +5,9 @@ from django.utils import timezone
 
 
 titre_validateur = RegexValidator(
-    regex=r'^[A-Za-z]+$',
-    message="Ce champ ne doit contenir que des lettres"
+    # Autorise lettres (y compris accents), chiffres, espaces, apostrophes et tirets
+    regex=r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s'\-]+$",
+    message="Ce champ ne doit contenir que des lettres, chiffres, espaces, apostrophes ou tirets"
 )
 
 class Evenement(models.Model):

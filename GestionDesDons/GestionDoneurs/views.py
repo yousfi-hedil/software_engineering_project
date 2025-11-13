@@ -4,8 +4,18 @@ from django.db.models import Count
 from django.db.utils import OperationalError, ProgrammingError
 from .models import BloodDonation, RefusedDonation
 from .forms import BloodDonationForm
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.http import HttpResponseRedirect
+
+# ----------------------------
+# PUBLIC / FRONT-END VIEWS
+# ----------------------------
 
 def donors(request):
+    """
+    Liste publique des donateurs.
+    """
     qs = BloodDonation.objects.all()
     q = (request.GET.get('q') or '').strip()
     group = (request.GET.get('group') or '').strip()
@@ -32,13 +42,11 @@ def donors(request):
     total_donations = qs.count()
     total_donors = qs.values('nom', 'prenom', 'mail').distinct().count()
 
-    # Compute top group on the full dataset (not affected by current filters)
     top_group_row = (
-        BloodDonation.objects.exclude(blood_group='')
-          .values('blood_group')
-          .annotate(c=Count('id'))
-          .order_by('-c')
-          .first()
+        BloodDonation.objects.exclude(blood_group='').values('blood_group')
+        .annotate(c=Count('id'))
+        .order_by('-c')
+        .first()
     )
     stat_top_group_label = top_group_row['blood_group'] if top_group_row else '—'
     stat_top_group_count = top_group_row['c'] if top_group_row else 0
@@ -50,7 +58,7 @@ def donors(request):
 
     groups = BloodDonation.objects.exclude(blood_group='').values_list('blood_group', flat=True).distinct().order_by('blood_group')
 
-    ctx = {
+    context = {
         'donations': qs,
         'stat_total_donations': total_donations,
         'stat_total_donors': total_donors,
@@ -62,50 +70,95 @@ def donors(request):
         'current_sort': sort,
         'groups': groups,
     }
-    return render(request, 'doneurs/donors.html', ctx)
+    return render(request, 'doneurs/donors.html', context)
 
+
+# ----------------------------
+# FRONT-END DONOR CRUD
+# ----------------------------
 def ajouter_donors(request):
+    """
+    Vue front-end pour ajouter un donateur (pas d'interface admin).
+    """
     if request.method == 'POST':
         form = BloodDonationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('liste_donneurs')  # ← nouveau nom
-
-        else:
-            reasons = getattr(form, 'refusal_reasons', None)
-            if reasons:
-                try:
-                    RefusedDonation.objects.create(
-                        nom=request.POST.get('nom', ''),
-                        prenom=request.POST.get('prenom', ''),
-                        mail=request.POST.get('mail', ''),
-                        telephone=request.POST.get('telephone', ''),
-                        adresse=request.POST.get('adresse', ''),
-                        blood_group=request.POST.get('blood_group', ''),
-                        reasons=reasons,
-                    )
-                except (OperationalError, ProgrammingError):
-                    pass
-            # Re-render the form with validation errors
-            return render(request, 'doneurs/ajout_aide.html', {'form': form})
+            saved = form.save()
+            # si le formulaire a des raisons de refus, afficher le formulaire avec les motifs
+            if getattr(form, 'refusal_reasons', None):
+                return render(request, 'doneurs/ajouter_donors.html', {'form': form, 'refused': True, 'reasons': form.refusal_reasons})
+            return redirect('doneurs:liste_donneurs')  # retour vers la liste front
     else:
         form = BloodDonationForm()
-    return render(request, 'doneurs/ajout_aide.html', {'form': form})
 
-def edit_donor(request, pk: int):
+    return render(request, 'doneurs/ajouter_donors.html', {'form': form})
+
+
+
+def edit_donor(request, pk):
+    """
+    Éditer un donateur côté front-end.
+    """
     obj = get_object_or_404(BloodDonation, pk=pk)
     if request.method == 'POST':
         form = BloodDonationForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect('liste_donneurs')
+            return redirect('doneurs:liste_donneurs')
     else:
         form = BloodDonationForm(instance=obj)
-    return render(request, 'doneurs/ajout_aide.html', {'form': form})
+
+    return render(request, 'doneurs/ajouter_donors.html', {'form': form, 'donation': obj})
+
 
 def delete_donor(request, pk: int):
+    """
+    Supprimer un donateur côté front-end.
+    """
     obj = get_object_or_404(BloodDonation, pk=pk)
     if request.method == 'POST':
         obj.delete()
-        return redirect('liste_donneurs')
+        return redirect('doneurs:liste_donneurs')
+    # render the existing 'supp_donors.html' confirmation template
     return render(request, 'doneurs/supp_donors.html', {'donation': obj})
+
+
+# ----------------------------
+# ADMIN (BACK-OFFICE) VIEWS
+# ----------------------------
+
+class DonorListAdmin(ListView):
+    model = BloodDonation
+    template_name = 'doneurs/admin_list_donors.html'
+    context_object_name = 'liste'
+
+
+class DonorCreateAdmin(CreateView):
+    model = BloodDonation
+    form_class = BloodDonationForm
+    template_name = 'doneurs/admin_add_donor.html'
+    success_url = reverse_lazy('doneurs:admin_donors')
+
+    def form_valid(self, form):
+        saved = form.save()
+        if getattr(form, 'refusal_reasons', None):
+            # render same template showing reasons and do not redirect/save a BloodDonation
+            return self.render_to_response(self.get_context_data(form=form, refused=True, reasons=form.refusal_reasons))
+        # normal flow
+        self.object = saved
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class DonorUpdateAdmin(UpdateView):
+    model = BloodDonation
+    form_class = BloodDonationForm
+    template_name = 'doneurs/admin_add_donor.html'
+    success_url = reverse_lazy('doneurs:admin_donors')
+    context_object_name = 'donation'
+
+
+class DonorDeleteAdmin(DeleteView):
+    model = BloodDonation
+    template_name = 'doneurs/admin_delete_donor.html'
+    success_url = reverse_lazy('doneurs:admin_donors')
+    context_object_name = 'donation'

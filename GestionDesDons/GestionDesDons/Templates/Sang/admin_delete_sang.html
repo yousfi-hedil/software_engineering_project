@@ -1,0 +1,17 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1>Supprimer une poche de sang</h1>
+<p>Voulez-vous vraiment supprimer la poche de sang : 
+    <strong>{{ sang.groupe_sanguin }} {{ sang.rhesus }}</strong> ?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="padding:10px 18px; border:none; border-radius:8px; background:var(--primary-color); color:white; cursor:pointer;">
+        Supprimer
+    </button>
+    <a href="{% url 'sang:admin_sangs' %}" style="padding:10px 18px; border-radius:8px; background:var(--primary-color); color:white; text-decoration:none; display:inline-block; text-align:center;">
+        Annuler
+    </a>
+</form>
+{% endblock %}

@@ -37,19 +37,20 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="{% url 'home' %}" class="nav-item nav-link">Accueil</a>
                     <a href="{% url 'about_html' %}" class="nav-item nav-link active">À propos</a>
-                    <a href="{% url 'liste_evenements' %}" class="nav-item nav-link">Événements</a>
+                    <a href="{% url 'evenement:liste_evenements' %}" class="nav-item nav-link">Événements</a>
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestionnaire</a>
                         <div class="dropdown-menu m-0">
-                            <a href="{% url 'liste_volunteers' %}" class="dropdown-item">Volontaires</a>
-                            <a href="{% url 'liste_donneurs' %}" class="dropdown-item">Bénéficiaires</a>
+                            <a href="{% url 'volontaires:liste_volunteers' %}" class="dropdown-item">Volontaires</a>
+                            <a href="{% url 'sang:liste_sangs' %}" class="dropdown-item">Dons</a>
+                            <a href="{% url 'doneurs:liste_donneurs' %}" class="dropdown-item">Bénéficiaires</a>
                         </div>
                     </div>
                     <a href="{% url 'contact_html' %}" class="nav-item nav-link">Contact</a>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
-                    <a class="btn btn-primary py-2 px-3" href="{% url 'ajouter_donors' %}">
+                    <a class="btn btn-primary py-2 px-3" href="{% url 'doneurs:ajouter_donors' %}">
                         <i class="fa fa-heart me-2"></i>Faire un don
                     </a>
                 </div>
@@ -86,7 +87,7 @@
                             <div class="feature-item"><div class="feature-icon"><i class="fa fa-globe"></i></div><div class="feature-content"><h5>Impact Mondial</h5><p>Présents dans 50+ pays</p></div></div>
                         </div>
                         <div class="about-buttons">
-                            <a href="{% url 'ajouter_donors' %}" class="btn btn-primary me-3"><i class="fa fa-heart me-2"></i>Faire un don</a>
+                            <a href="{% url 'doneurs:ajouter_donors' %}" class="btn btn-primary me-3"><i class="fa fa-heart me-2"></i>Faire un don</a>
                             <a href="{% url 'contact_html' %}" class="btn btn-outline-primary"><i class="fa fa-phone me-2"></i>Nous contacter</a>
                         </div>
                     </div>
@@ -130,9 +131,9 @@
                     <h5 class="text-light mb-4">Liens Rapides</h5>
                     <a class="btn btn-link" href="{% url 'about_html' %}">À propos</a>
                     <a class="btn btn-link" href="{% url 'contact_html' %}">Contact</a>
-                    <a class="btn btn-link" href="{% url 'liste_volunteers' %}">Devenir Volontaire</a>
-                    <a class="btn btn-link" href="{% url 'ajouter_donors' %}">Faire un Don</a>
-                    <a class="btn btn-link" href="{% url 'liste_evenements' %}">Événements</a>
+                    <a class="btn btn-link" href="{% url 'volontaires:liste_volunteers' %}">Devenir Volontaire</a>
+                    <a class="btn btn-link" href="{% url 'doneurs:ajouter_donors' %}">Faire un Don</a>
+                    <a class="btn btn-link" href="{% url 'evenement:liste_evenements' %}">Événements</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Newsletter</h5>

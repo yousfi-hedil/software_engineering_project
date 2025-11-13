@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Dashboard Admin - DonVia{% endblock %}</title>
+  <style>
+    :root {
+      --primary-color: #7C1C24;
+      --accent: #e85b5b;
+      --light-bg: #FFF5F6;
+      --text-color: #3a3a3a;
+      --white: #fff;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --muted: #777;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Poppins', sans-serif; }
+    body { display:flex; min-height:100vh; background:var(--light-bg); color:var(--text-color); }
+    .sidebar { width:260px; background:var(--primary-color); color:var(--white); padding:25px 18px; display:flex; flex-direction:column; justify-content:space-between; }
+    .sidebar h2 { font-size:1.5rem; text-align:center; margin-bottom:14px; }
+    .menu { display:flex; flex-direction:column; gap:8px; }
+    .menu a { color:var(--white); text-decoration:none; padding:10px 12px; border-radius:8px; transition:0.15s; display:block; }
+    .menu a.active, .menu a:hover { background: rgba(255,255,255,0.12); }
+    .logout { margin-top:24px; border-top:1px solid rgba(255,255,255,0.12); padding-top:14px; }
+    .logout a { color:#ffdede; text-decoration:none; }
+    .main-content { flex:1; padding:28px; }
+    .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+    .header h1 { color:var(--primary-color); }
+    .user-info { display:flex; gap:10px; align-items:center; }
+    .user-info img { width:40px; height:40px; border-radius:50%; border:2px solid var(--primary-color); }
+    .management { background:var(--white); padding:18px; border-radius:10px; box-shadow:var(--shadow); text-align:center; }
+    .management a { display:inline-block; margin:12px; padding:12px 18px; border-radius:8px; background:var(--primary-color); color:white; text-decoration:none; transition:0.3s; }
+    .management a:hover { background:#a12b33; }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <div style="display:flex; align-items:center; margin-bottom:20px; gap:10px;">
+      <!-- Agrandir le logo à 80px -->
+      <img src="C:\Users\Hejer\Downloads\logoo.png"
+           style="width:80px; height:80px; border-radius:8px;">
+      <!-- Texte en blanc -->
+      <h2 style="color:white; margin:0; font-size:1.8rem;">DonVia</h2>
+    </div>
+      <div class="menu">
+        <a href="{% url 'evenement:admin_evenements' %}">Gestion des événements</a>
+        <a href="{% url 'volontaires:admin_volunteers' %}">Gestion des volontaires</a>
+        <a href="{% url 'sang:admin_sangs' %}">Gestion des dons</a> 
+        <a href="{% url 'doneurs:admin_donors' %}">Gestion des donneurs</a>
+        <a href="gestion-utilisateurs.html">Gestion des utilisateurs</a>
+      </div>
+    </div>
+    <div class="logout">
+      <a href="#">Déconnexion</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h1>{% block page_title %}Tableau de bord{% endblock %}</h1>
+      <div class="user-info">
+        <img src="{% static 'images/admin_avatar.png' %}" alt="Admin">
+        <span>Admin</span>
+      </div>
+    </div>
+
+    <div class="management">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+  </div>
+</body>
+</html>

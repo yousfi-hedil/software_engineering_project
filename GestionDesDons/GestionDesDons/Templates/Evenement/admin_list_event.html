@@ -1,0 +1,52 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1 style="text-align:center; margin-bottom:20px;">Liste des événements</h1>
+
+<div style="text-align:center; margin-bottom:20px;">
+    <a href="{% url 'evenement:admin_evenement_add' %}" 
+       style="padding:8px 16px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+       Ajouter un événement
+    </a>
+</div>
+
+<div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse: collapse; min-width:800px;">
+        <thead style="background-color:#f4eaea;">
+            <tr>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Titre</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Description</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Date de début</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Lieu</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Participants</th>
+                <th style="padding:12px; border-bottom:2px solid #ccc;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in liste %}
+            <tr style="text-align:center;">
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ e.titre }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ e.description }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ e.date_debut }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ e.lieu_evenement }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">{{ e.nb_participants }}</td>
+                <td style="padding:10px; border-bottom:1px solid #eee;">
+                    <a href="{% url 'evenement:admin_evenement_update' e.pk %}" 
+                       style="padding:6px 12px; margin-right:5px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+                       Modifier
+                    </a>
+                    <a href="{% url 'evenement:admin_evenement_delete' e.pk %}" 
+                       style="padding:6px 12px; background-color:#7C1C24; color:white; border-radius:6px; text-decoration:none;">
+                       Supprimer
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align:center; padding:12px;">Aucun événement trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

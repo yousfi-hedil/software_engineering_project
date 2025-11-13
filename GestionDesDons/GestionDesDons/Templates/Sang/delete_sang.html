@@ -34,7 +34,7 @@
                     {% csrf_token %}
                     <div class="d-flex justify-content-center gap-2">
                         <button type="submit" class="btn btn-danger">Oui, supprimer</button>
-                        <a href="{% url 'liste_sangs' %}" class="btn btn-secondary">Annuler</a>
+                        <a href="{% url 'sang:liste_sangs' %}" class="btn btn-secondary">Annuler</a>
                     </div>
                 </form>
 
